@@ -1,8 +1,12 @@
 package com.example.refrigerator
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.example.refrigerator.databinding.ActivityMainBinding
+import com.google.firebase.firestore.FirebaseFirestore
+
 
 class MainActivity : AppCompatActivity() {
     private val viewBinding: ActivityMainBinding by lazy {
