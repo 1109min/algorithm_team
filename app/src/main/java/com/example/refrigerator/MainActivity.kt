@@ -47,6 +47,9 @@ class MainActivity : AppCompatActivity() {
             selectedItemId = R.id.menu_home
         }
 
+        //재료 추가 버튼
+        viewBinding.mainBtn.setOnClickListener {
 
+        }
     }
 }
