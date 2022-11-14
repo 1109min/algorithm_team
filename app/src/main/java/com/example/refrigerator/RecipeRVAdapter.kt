@@ -5,10 +5,10 @@ import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.refrigerator.databinding.IngredientItemLayoutBinding
+import com.example.refrigerator.databinding.RecipeItemLayoutBinding
 
 
-class IngredientRVAdapter(private val dataList: ArrayList<IngredientData>): RecyclerView.Adapter<RecyclerView.ViewHolder>(), ItemTouchHelperListener {
+class RecipeRVAdapter(private val dataList: ArrayList<RecipeData>): RecyclerView.Adapter<RecyclerView.ViewHolder>(),ItemTouchHelperListener {
 
     private val checkRead = SparseBooleanArray()
 
@@ -25,25 +25,25 @@ class IngredientRVAdapter(private val dataList: ArrayList<IngredientData>): Recy
 
 
     //viewHolder 객체
-    inner class DataViewHolder(private val viewBinding: IngredientItemLayoutBinding): RecyclerView.ViewHolder(viewBinding.root){
+    inner class DataViewHolder(private val viewBinding: RecipeItemLayoutBinding): RecyclerView.ViewHolder(viewBinding.root){
 
-//        init {
-//            itemView.setOnClickListener {
-//                mItemClickListener.onItemClick(adapterPosition)
-//            }
-//            itemView.setOnLongClickListener{
-//                mItemClickListener.onLongClick(adapterPosition)
-//                return@setOnLongClickListener true
-//            }
-//        }
+        init {
+            itemView.setOnClickListener {
+                mItemClickListener.onItemClick(adapterPosition)
+            }
+            itemView.setOnLongClickListener{
+                mItemClickListener.onLongClick(adapterPosition)
+                return@setOnLongClickListener true
+            }
+        }
         @SuppressLint("ResourceAsColor", "SuspiciousIndentation")
-        fun bind(data: IngredientData) {
+        fun bind(data: RecipeData) {
 //            if(data.profile_src == R.drawable.ic_profile_default){
 //                viewBinding.story.borderWidth = 0
 //            }
             viewBinding.ingredientName.text = data.name
             viewBinding.ingredientAmount.text = data.amount.toString() + "g"
-            viewBinding.ingredientPeriod.text = data.dateString
+            viewBinding.ingredientPeriod.text = data.ingredient
 
 
 //            if (data.read) {
@@ -75,28 +75,29 @@ class IngredientRVAdapter(private val dataList: ArrayList<IngredientData>): Recy
         }
     }
 
-//    override fun getItemViewType(position: Int): Int {
+    //    override fun getItemViewType(position: Int): Int {
 //        return dataList[position].type
 //    }
     //viewHolder 만들어질때 실행할 동작들
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-                val myBinding = IngredientItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                return DataViewHolder(myBinding)
+        val myBinding = RecipeItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return DataViewHolder(myBinding)
     }
 
     //viewHolder가 실제로 데이터를 표시해야할 때 호출되는 함수
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-                (holder as DataViewHolder).bind(dataList[position])
+        (holder as DataViewHolder).bind(dataList[position])
     }
     //표현할 item의 총 개수
     override fun getItemCount(): Int = dataList.size
 
-    fun addUserItems(data: IngredientData){
-        dataList.add(data)
-        notifyItemInserted(getItemCount()-1)
+    fun addIitem(data: RecipeData,position: Int){
+        dataList.add(position,data)
+    }
+    fun removeItem(position: Int){
+        dataList.removeAt(position)
     }
 
-    // 아이템을 드래그되면 호출되는 메소드
     override fun onItemMove(from_position: Int, to_position: Int): Boolean {
         val name = dataList[from_position]
         // 리스트 갱신
@@ -108,11 +109,7 @@ class IngredientRVAdapter(private val dataList: ArrayList<IngredientData>): Recy
         return true
     }
 
-    // 아이템 스와이프되면 호출되는 메소드
     override fun onItemSwipe(position: Int) {
-        // 리스트 아이템 삭제
         dataList.removeAt(position)
-        // 아이템 삭제되었다고 공지
-        notifyItemRemoved(position)
-    }
+        notifyItemRemoved(position)    }
 }

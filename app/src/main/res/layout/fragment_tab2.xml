@@ -3,12 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Tab2Fragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="dlddld" />
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tab1_RV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/tab1_button"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="메뉴 추가"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            ></androidx.appcompat.widget.AppCompatButton>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

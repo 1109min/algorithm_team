@@ -1,59 +1,75 @@
 package com.example.refrigerator
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.refrigerator.databinding.FragmentTab2Binding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [Tab2Fragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class Tab2Fragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class Tab2Fragment: Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    lateinit var binding: FragmentTab2Binding
+    val recipeList: ArrayList<RecipeData> = arrayListOf()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tab2, container, false)
-    }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Tab2Fragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Tab2Fragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    ): View? {
+        binding = FragmentTab2Binding.inflate(inflater, container, false)
+
+        binding.tab1RV.layoutManager = LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false)
+
+        val adapter = RecipeRVAdapter(recipeList)
+
+//        Storyadapter.setMyItemClickListener(object : StoryRVAdapter.OnItemClickListener {
+//            override fun onItemClick(position: Int) {
+//
+//                if (storyList[position].read==false) {
+//                    storyList[position].read=true
+//
+//                    Storyadapter.notifyDataSetChanged()
+//                }
+//                val intent = Intent(getActivity(), StoryViewActivity::class.java)
+//                intent.putExtra("id",storyList[position].user_id)
+//                intent.putExtra("profile",storyList[position].profile_src)
+//                intent.putExtra("pic",storyList[position].story_pic)
+//                intent.putExtra("read",storyList[position].read)
+//                intent.putExtra("type",storyList[position].type)
+//                intent.putExtra("time",storyList[position].time)
+//
+//                startActivity(intent)
+//            }
+//            override fun onLongClick(position: Int){
+//
+//            }
+//        })
+
+        //binding.mainFeed.adapter = Postadapter
+        binding.tab1RV.adapter = adapter
+        binding.tab1RV.addItemDecoration(RVDecoration(50,1))
+
+
+        recipeList.apply{
+            add(RecipeData("김치찌개","김치",100))
+            add(RecipeData("순두부찌개","순두부",200))
+            add(RecipeData("된장찌개","된장",150))
+            add(RecipeData("김치찌개","김치",100))
+            add(RecipeData("순두부찌개","순두부",200))
+            add(RecipeData("된장찌개","된장",150))
+            add(RecipeData("김치찌개","김치",100))
+            add(RecipeData("순두부찌개","순두부",200))
+            add(RecipeData("된장찌개","된장",150))
+        }
+        adapter.notifyDataSetChanged()
+
+//            Postadapter.addUserItems(PostData(title_memo, text_memo))
+        return binding.root
     }
 }
