@@ -7,12 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.example.refrigerator.databinding.FragmentHomeBinding
+import com.example.refrigerator.databinding.FragmentTab1Binding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 
 class HomeFragment : Fragment() {
     var arrayList: ArrayList<Any> = ArrayList()
+    lateinit var binding: FragmentHomeBinding
 
     //type 저장 변수
     var ingredientName: ArrayList<String> = ArrayList()
@@ -32,8 +35,8 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val binding = inflater.inflate(R.layout.fragment_home, container, false)
-        ingredientTextView = binding.findViewById(R.id.ingredient)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        ingredientTextView = binding.ingredient
 
         var firestore: FirebaseFirestore? = null
         var uid: String? = null
@@ -52,7 +55,7 @@ class HomeFragment : Fragment() {
                         if (i % 3 == 0)
                             ingredientName.add(arrayList[i] as String)
                         else if (i % 3 == 1)
-                            ingredientTime.add(arrayList[i].toString())
+                            ingredientTime.add(arrayList[i] as String)
                         if (i % 3 == 2)
                             ingredientAmount.add(arrayList[i] as String)
                     } catch (e: Exception) {
@@ -61,13 +64,10 @@ class HomeFragment : Fragment() {
                 }
 
                 ingredientTextView.text = ingredientTime.toString()
-//                arrayList.add(35, "2000")
-//                firestore.collection("sourcefile").document("ingredients")
-//                    .update("ingredient", arrayList)
 
                 Log.d("event", arrayList.toString())
             }
-        return binding
+        return binding.root
     }
 
 }
