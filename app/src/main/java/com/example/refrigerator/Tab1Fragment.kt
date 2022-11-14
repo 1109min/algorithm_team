@@ -43,9 +43,8 @@ class Tab1Fragment: Fragment() {
         val adapter = IngredientRVAdapter(ingredientList)
 
 
-        //binding.mainFeed.adapter = Postadapter
         binding.tab1RV.adapter = adapter
-        binding.tab1RV.addItemDecoration(RVDecoration(50,1))
+        binding.tab1RV.addItemDecoration(RVDecoration(30,1))
         var firestore: FirebaseFirestore? = null
         var uid: String? = null
         uid = FirebaseAuth.getInstance().currentUser?.uid
@@ -93,6 +92,7 @@ class Tab1Fragment: Fragment() {
                 var byMonth = Comparator.comparing { obj: IngredientData -> obj.dateString.split("-")[1]}
                 var byday = Comparator.comparing { obj: IngredientData -> obj.dateString.split("-")[2]}
                 ingredientList.sortWith(byYear.thenComparing(byMonth.thenComparing(byday)))
+
                 adapter.notifyDataSetChanged()
             }
 
@@ -100,15 +100,21 @@ class Tab1Fragment: Fragment() {
         adapter.notifyDataSetChanged()
 
 
-//            Postadapter.addUserItems(PostData(title_memo, text_memo))
+        //아이템 스와이프
+        val itemTouchHelperCallback = ItemTouchHelperCallback(adapter)
+
+        // ItemTouchHelper의 생성자로 ItemTouchHelper.Callback 객체 셋팅
+        val helper = ItemTouchHelper(itemTouchHelperCallback)
+        // RecyclerView에 ItemTouchHelper 연결
+        helper.attachToRecyclerView(binding.tab1RV)
+
         return binding.root
     }
+
     fun toTimeStamp(st: String): Date {
         var preConverted = st
-
         var _seconds = (preConverted.substring(18, 28)).toLong(); // 1621176915
         var _nanoseconds = (preConverted.substring(42, preConverted.lastIndexOf(')'))).toInt(); // 276147000
-
         var postConverted = Timestamp(_seconds, _nanoseconds);
         return postConverted.toDate()
     }

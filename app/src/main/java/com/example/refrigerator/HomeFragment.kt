@@ -11,6 +11,8 @@ import com.example.refrigerator.databinding.FragmentHomeBinding
 import com.example.refrigerator.databinding.FragmentTab1Binding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.sql.Timestamp
+import java.text.SimpleDateFormat
 
 
 class HomeFragment : Fragment() {
@@ -62,9 +64,6 @@ class HomeFragment : Fragment() {
                         Log.d("error:$i", e.toString())
                     }
                 }
-
-                ingredientTextView.text = ingredientTime.toString()
-
                 Log.d("event", arrayList.toString())
             }
         return binding.root
