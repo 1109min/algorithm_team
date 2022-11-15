@@ -10,15 +10,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackgroundBorderless"
         >
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:id="@+id/ingredient_pic"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:src="@drawable/harvest"
+        android:src="@drawable/pic4_harvest"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,11 +27,11 @@
         app:layout_constraintEnd_toEndOf="parent"
 
         >
-    </de.hdodenhof.circleimageview.CircleImageView>
+    </ImageView>
 
         <TextView
             android:id="@+id/ingredient_name"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
 
@@ -38,13 +39,14 @@
             android:minHeight="20dp"
             android:text="이름"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:textStyle="normal"
+            android:gravity="center_horizontal"
 
+            app:layout_constraintTop_toBottomOf="@id/ingredient_pic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ingredient_pic"
             app:layout_constraintVertical_bias="0">
 
         </TextView>

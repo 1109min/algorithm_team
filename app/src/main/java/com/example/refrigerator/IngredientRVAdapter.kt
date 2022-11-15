@@ -18,6 +18,7 @@ class IngredientRVAdapter(private val dataList: ArrayList<IngredientData>): Recy
 
     private val checkRead = SparseBooleanArray()
     var canRemove : Boolean = false
+    var kind : Array<String> = arrayOf("과일","채소","고기","수산물","유제품","주류","곡물","견과류","조미료","기타")
 
     interface OnItemClickListener {
         fun onItemClick(position: Int)
@@ -47,6 +48,9 @@ class IngredientRVAdapter(private val dataList: ArrayList<IngredientData>): Recy
         fun bind(data: IngredientData) {
 
             viewBinding.ingredientName.text = data.name
+
+           viewBinding.ingredientPic.setImageResource(data.pic)
+
             //viewBinding.ingredientAmount.text = data.amount.toString() + "g"
             //viewBinding.ingredientPeriod.text = data.dateString
 

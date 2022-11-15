@@ -13,8 +13,8 @@ class RVDecoration(val div : Int, val mode : Int) : RecyclerView.ItemDecoration(
 //            val offset = 20
 
         if (mode == 1){
-            outRect.top = div/2
-            outRect.bottom = div/2
+            outRect.top = div/2 + 20
+            outRect.bottom = div/2 + 20
             outRect.left = div/2
             outRect.right = div/2
         }else if (mode == 2){

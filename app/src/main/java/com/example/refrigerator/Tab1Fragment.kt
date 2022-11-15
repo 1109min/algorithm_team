@@ -68,13 +68,18 @@ class Tab1Fragment: Fragment() {
 
         adapter.setMyItemClickListener(object : IngredientRVAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
-                binding.clickItem.startAnimation(fab_open)
-                window = true
-                binding.clickItem.visibility = VISIBLE
-                binding.clickItem.isClickable=true
+
+                if(window==false){
+                    binding.clickItem.startAnimation(fab_open)
+                    window = true
+                    binding.clickItem.visibility = VISIBLE
+                    binding.clickItem.isClickable=true
+                }
+
                 binding.nameItem.text = ingredientList[position].name
                 binding.amountItem.text = ingredientList[position].amount+"g"
                 binding.dateItem.text = ingredientList[position].dateString
+                binding.picItem.setImageResource(ingredientList[position].pic)
             }override fun onLongClick(position: Int){
 
             }
@@ -125,11 +130,25 @@ class Tab1Fragment: Fragment() {
 
                 for (i in 0 until ingredientName.size) {
 
+                    var pic:Int = 0
+
+                    when(ingredientAmount[i].toInt()%7){
+                        0 -> pic = R.drawable.pic1_barbecue
+                        1 -> pic = R.drawable.pic2_dairy_products
+                        2 -> pic =(R.drawable.pic3_fruit)
+                        3 -> pic =(R.drawable.pic4_harvest)
+                        4 -> pic =(R.drawable.pic5_kimchi)
+                        5 -> pic =(R.drawable.pic6_vegetable)
+                        6 -> pic =(R.drawable.pic7_wine)
+                        else -> pic =(R.drawable.pic7_wine)
+                    }
+
                     ingredientList.add(
                         IngredientData(
                             ingredientName[i],
                             ingredientAmount[i],
-                            ingredientTime[i]
+                            ingredientTime[i],
+                            pic
                         )
                     )
                 }
