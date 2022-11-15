@@ -14,7 +14,7 @@
             android:id="@+id/ingredient_pic"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/harvest"
+            android:src="@color/new_blue"
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
