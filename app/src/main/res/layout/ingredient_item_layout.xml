@@ -8,20 +8,23 @@
     android:paddingBottom="10dp"
     android:paddingStart="20dp"
     android:paddingEnd="10dp"
-    android:layout_margin="5dp">
+    android:layout_margin="5dp"
+    android:elevation="3dp">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ingredient_pic"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@color/new_blue"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/date_safe"
+            android:backgroundTint="@color/new_mint"
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/ingredient_name"
             >
-        </ImageView>
+        </de.hdodenhof.circleimageview.CircleImageView>
 
         <TextView
             android:id="@+id/ingredient_name"

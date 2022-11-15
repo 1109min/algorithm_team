@@ -1,17 +1,26 @@
 package com.example.refrigerator
 
+import android.content.Context
+import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.refrigerator.databinding.ActivityMainBinding
 import com.example.refrigerator.databinding.FragmentTab1Binding
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
@@ -28,6 +37,12 @@ class Tab1Fragment: Fragment() {
     var ingredientAmount: ArrayList<String> = ArrayList()
     var ingredientTime: ArrayList<String> = ArrayList()
     var arrayList: ArrayList<Any> = ArrayList()
+    lateinit var intent : Intent
+    private var fab_open: Animation? = null
+    private  var fab_close: Animation? = null
+
+    private lateinit var callback: OnBackPressedCallback
+    var window: Boolean = false
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
@@ -38,13 +53,42 @@ class Tab1Fragment: Fragment() {
     ): View? {
         binding = FragmentTab1Binding.inflate(inflater, container, false)
 
-        binding.tab1RV.layoutManager = LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false)
+        //binding.tab1RV.layoutManager = LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false)
+        binding.tab1RV.layoutManager = GridLayoutManager(getActivity(),4)
 
         val adapter = IngredientRVAdapter(ingredientList)
 
 
         binding.tab1RV.adapter = adapter
-        binding.tab1RV.addItemDecoration(RVDecoration(10,1))
+        binding.tab1RV.addItemDecoration(RVDecoration(30,1))
+        //터치 시 화면 송출
+
+        fab_open = AnimationUtils.loadAnimation(this.activity, R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(this.activity, R.anim.fab_close);
+
+        adapter.setMyItemClickListener(object : IngredientRVAdapter.OnItemClickListener {
+            override fun onItemClick(position: Int) {
+                binding.clickItem.startAnimation(fab_open)
+                window = true
+                binding.clickItem.visibility = VISIBLE
+                binding.clickItem.isClickable=true
+                binding.nameItem.text = ingredientList[position].name
+                binding.amountItem.text = ingredientList[position].amount+"g"
+                binding.dateItem.text = ingredientList[position].dateString
+            }override fun onLongClick(position: Int){
+
+            }
+        })
+
+        binding.clickItem.setOnClickListener{
+
+        }
+        binding.closeBtn.setOnClickListener{
+            binding.clickItem.startAnimation(fab_close)
+            binding.clickItem.isClickable=false
+            window=false
+            binding.clickItem.visibility = GONE
+        }
 
         //firebase 연동
         var firestore: FirebaseFirestore? = null
@@ -118,5 +162,30 @@ class Tab1Fragment: Fragment() {
         var _nanoseconds = (preConverted.substring(42, preConverted.lastIndexOf(')'))).toInt(); // 276147000
         var postConverted = Timestamp(_seconds, _nanoseconds);
         return postConverted.toDate()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if(window == true){
+                    binding.clickItem.startAnimation(fab_close)
+                    window=false
+                    binding.clickItem.visibility = GONE
+                    binding.clickItem.isClickable=false
+                }else{
+                    (activity as MainActivity?)
+                        ?.supportFragmentManager
+                        ?.beginTransaction()
+                        ?.replace(ActivityMainBinding.inflate(layoutInflater).containerFragment.id,HomeFragment())
+                        ?.commitAllowingStateLoss()
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 }

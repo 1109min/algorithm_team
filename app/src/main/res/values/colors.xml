@@ -16,5 +16,9 @@
     <color name="new_mint">#A5F1E9</color>
     <color name="new_light_mint">#E1FFEE</color>
     <color name="new_yellow">#FFEEAF</color>
+    <color name="wgrey">#8c8c8c</color>
+    <color name="buttongrey">#f6f6f6</color>
+    <color name="insta_sky">#008FF4</color>
+    <color name="green">#00ff00</color>
 
 </resources>

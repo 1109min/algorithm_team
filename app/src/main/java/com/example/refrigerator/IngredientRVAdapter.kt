@@ -6,6 +6,7 @@ import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.refrigerator.databinding.IngredientItemLayout2Binding
 import com.example.refrigerator.databinding.IngredientItemLayoutBinding
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
@@ -31,25 +32,23 @@ class IngredientRVAdapter(private val dataList: ArrayList<IngredientData>): Recy
 
 
     //viewHolder 객체
-    inner class DataViewHolder(private val viewBinding: IngredientItemLayoutBinding): RecyclerView.ViewHolder(viewBinding.root){
+    inner class DataViewHolder(private val viewBinding: IngredientItemLayout2Binding): RecyclerView.ViewHolder(viewBinding.root){
 
-//        init {
-//            itemView.setOnClickListener {
-//                mItemClickListener.onItemClick(adapterPosition)
-//            }
-//            itemView.setOnLongClickListener{
-//                mItemClickListener.onLongClick(adapterPosition)
-//                return@setOnLongClickListener true
-//            }
-//        }
+        init {
+            itemView.setOnClickListener {
+                mItemClickListener.onItemClick(adapterPosition)
+            }
+            itemView.setOnLongClickListener{
+                mItemClickListener.onLongClick(adapterPosition)
+                return@setOnLongClickListener true
+            }
+        }
         @SuppressLint("ResourceAsColor", "SuspiciousIndentation")
         fun bind(data: IngredientData) {
-//            if(data.profile_src == R.drawable.ic_profile_default){
-//                viewBinding.story.borderWidth = 0
-//            }
+
             viewBinding.ingredientName.text = data.name
-            viewBinding.ingredientAmount.text = data.amount.toString() + "g"
-            viewBinding.ingredientPeriod.text = data.dateString
+            //viewBinding.ingredientAmount.text = data.amount.toString() + "g"
+            //viewBinding.ingredientPeriod.text = data.dateString
 
             var current = Timestamp(System.currentTimeMillis())
             var sdf = SimpleDateFormat("yyyy-MM-dd")
@@ -83,7 +82,7 @@ class IngredientRVAdapter(private val dataList: ArrayList<IngredientData>): Recy
 //    }
     //viewHolder 만들어질때 실행할 동작들
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-                val myBinding = IngredientItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val myBinding = IngredientItemLayout2Binding.inflate(LayoutInflater.from(parent.context), parent, false)
                 return DataViewHolder(myBinding)
     }
 
