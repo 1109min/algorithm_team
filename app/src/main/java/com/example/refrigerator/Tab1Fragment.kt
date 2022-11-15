@@ -44,7 +44,9 @@ class Tab1Fragment: Fragment() {
 
 
         binding.tab1RV.adapter = adapter
-        binding.tab1RV.addItemDecoration(RVDecoration(30,1))
+        binding.tab1RV.addItemDecoration(RVDecoration(10,1))
+
+        //firebase 연동
         var firestore: FirebaseFirestore? = null
         var uid: String? = null
         uid = FirebaseAuth.getInstance().currentUser?.uid
@@ -76,7 +78,6 @@ class Tab1Fragment: Fragment() {
                     }
 
                 }
-                binding.tab1Button.text = ingredientName[13]
 
                 for (i in 0 until ingredientName.size) {
 
@@ -106,7 +107,7 @@ class Tab1Fragment: Fragment() {
         // ItemTouchHelper의 생성자로 ItemTouchHelper.Callback 객체 셋팅
         val helper = ItemTouchHelper(itemTouchHelperCallback)
         // RecyclerView에 ItemTouchHelper 연결
-        helper.attachToRecyclerView(binding.tab1RV)
+        //helper.attachToRecyclerView(binding.tab1RV)
 
         return binding.root
     }

@@ -12,4 +12,9 @@
     <color name="blue">#50a7ee</color>
     <color name="btn_blue">#77BEF9</color>
     <color name="back_sky">#D6ECFF</color>
+    <color name="new_blue">#7FBCD2</color>
+    <color name="new_mint">#A5F1E9</color>
+    <color name="new_light_mint">#E1FFEE</color>
+    <color name="new_yellow">#FFEEAF</color>
+
 </resources>

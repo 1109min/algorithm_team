@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryDark">@color/blue</item>
+        <item name="colorAccent">@color/blue</item>
+
+        <!--custom font-family 적용-->
+
+        <item name="android:editTextStyle">@style/customEditTextFontStyle</item>
+        <item name="android:radioButtonStyle">@style/customRadioButtonFontStyle</item>
+        <item name="android:checkboxStyle">@style/customCheckboxFontStyle</item>
+        <item name="android:textViewStyle" tools:ignore="DuplicateDefinition">@style/nanumTextView</item>
+        <item name="android:buttonStyle" tools:ignore="DuplicateDefinition">@style/nanumButton</item>
+
+
+    </style>
+    <style name="nanumTextView" parent="android:Widget.TextView">
+
+        <item name="android:fontFamily">@font/jua</item>
+
+    </style>
+
+
+
+    <style name="nanumButton" parent="android:Widget.Button">
+
+        <item name="android:fontFamily">@font/jua</item>
+
+    </style>
+</resources>

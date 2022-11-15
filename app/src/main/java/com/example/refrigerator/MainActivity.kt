@@ -1,9 +1,12 @@
 package com.example.refrigerator
 
 import android.os.Bundle
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.refrigerator.databinding.ActivityMainBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -14,12 +17,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private var fab_main: FloatingActionButton? = null
-    private  var fab_sub1:FloatingActionButton? = null
-    private  var fab_sub2:FloatingActionButton? = null
+    private  var fab_sub1: ConstraintLayout? = null
+    private  var fab_sub2: ConstraintLayout? = null
     private var fab_open: Animation? = null
     private  var fab_close:Animation? = null
     private var isFabOpen = false
 
+    lateinit var fadeInAnim: Animation
+    lateinit var fadeOutAnim: Animation
+    lateinit var mbd: Animation
+    lateinit var mbu: Animation
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,18 +72,25 @@ class MainActivity : AppCompatActivity() {
         fab_sub1 = viewBinding.ingredientPlusBtn
         fab_sub2 = viewBinding.recipePlusBtn
 
-
+        fadeInAnim = AnimationUtils.loadAnimation(this, R.anim.fade_in)
+        fadeOutAnim = AnimationUtils.loadAnimation(this, R.anim.fade_out)
+        mbd = AnimationUtils.loadAnimation(this,R.anim.move_bottom_down)
+        mbu = AnimationUtils.loadAnimation(this,R.anim.move_bottom_up)
 
         fab_main!!.setOnClickListener{
             toggleFab()
         }
 
         fab_sub1!!.setOnClickListener{
-            toggleFab()
+
         }
 
         fab_sub2!!.setOnClickListener {
+
+        }
+        viewBinding.btnBackLayout.setOnClickListener {
             toggleFab()
+            viewBinding.btnBackLayout.visibility = GONE
         }
 
 
@@ -90,6 +104,9 @@ class MainActivity : AppCompatActivity() {
             fab_sub1!!.isClickable = false
             fab_sub2!!.isClickable = false
             isFabOpen = false
+            viewBinding.btnBackLayout.startAnimation(fadeOutAnim)
+            viewBinding.btnBackLayout.visibility = GONE
+
         } else {
             fab_main!!.setImageResource(R.drawable.ic_baseline_close_24)
             fab_sub1!!.startAnimation(fab_open)
@@ -97,6 +114,9 @@ class MainActivity : AppCompatActivity() {
             fab_sub1!!.isClickable = true
             fab_sub2!!.isClickable = true
             isFabOpen = true
+            viewBinding.btnBackLayout.startAnimation(fadeInAnim)
+            viewBinding.btnBackLayout.visibility = VISIBLE
+
         }
     }
 }

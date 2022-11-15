@@ -16,6 +16,7 @@ import kotlin.collections.ArrayList
 class IngredientRVAdapter(private val dataList: ArrayList<IngredientData>): RecyclerView.Adapter<RecyclerView.ViewHolder>(), ItemTouchHelperListener {
 
     private val checkRead = SparseBooleanArray()
+    var canRemove : Boolean = false
 
     interface OnItemClickListener {
         fun onItemClick(position: Int)
@@ -65,21 +66,15 @@ class IngredientRVAdapter(private val dataList: ArrayList<IngredientData>): Recy
 
             when {
                 diffDays > 7 -> {
-                    viewBinding.ingredientPeriod.setTextColor(Color.parseColor("#000000"))
+                    viewBinding.ingredientPeriod.setBackgroundResource(R.drawable.date_safe)
                 }
                 diffDays in 1..7 -> {
-                    viewBinding.ingredientPeriod.setTextColor(Color.parseColor("#ff7f00"))
+                    viewBinding.ingredientPeriod.setBackgroundResource(R.drawable.date_caution)
                 }
                 else -> {
-                    viewBinding.ingredientPeriod.setTextColor(Color.RED)
+                    viewBinding.ingredientPeriod.setBackgroundResource(R.drawable.date_after)
                 }
             }
-
-
-
-
-
-
         }
     }
 
@@ -119,8 +114,14 @@ class IngredientRVAdapter(private val dataList: ArrayList<IngredientData>): Recy
     // 아이템 스와이프되면 호출되는 메소드
     override fun onItemSwipe(position: Int) {
         // 리스트 아이템 삭제
-       // dataList.removeAt(position)
-        // 아이템 삭제되었다고 공지
-        notifyItemRemoved(position)
+        val name = dataList[position]
+        if(canRemove) {
+           //dataList.removeAt(position)
+            // 아이템 삭제되었다고 공지
+            notifyItemRemoved(position)
+        }else {
+            addUserItems(name)
+            notifyItemChanged(position)
+        }
     }
 }
