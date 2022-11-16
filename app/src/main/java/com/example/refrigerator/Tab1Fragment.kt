@@ -2,6 +2,7 @@ package com.example.refrigerator
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
@@ -25,6 +26,7 @@ import com.example.refrigerator.databinding.FragmentTab1Binding
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.lang.Math.random
 import java.util.*
 
 
@@ -66,6 +68,7 @@ class Tab1Fragment: Fragment() {
         fab_open = AnimationUtils.loadAnimation(this.activity, R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(this.activity, R.anim.fab_close);
 
+        //각 아이템을 클릭했을 때
         adapter.setMyItemClickListener(object : IngredientRVAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
 
@@ -80,6 +83,13 @@ class Tab1Fragment: Fragment() {
                 binding.amountItem.text = ingredientList[position].amount+"g"
                 binding.dateItem.text = ingredientList[position].dateString
                 binding.picItem.setImageResource(ingredientList[position].pic)
+
+                    when(ingredientList[position].late) {
+                        2 -> binding.dateItem.setTextColor(Color.RED)
+                        1 -> binding.dateItem.setTextColor(Color.parseColor("#ff7f00"))
+                        0 -> binding.dateItem.setTextColor(Color.parseColor("#00DE00"))
+                    }
+
             }override fun onLongClick(position: Int){
 
             }
@@ -130,9 +140,9 @@ class Tab1Fragment: Fragment() {
 
                 for (i in 0 until ingredientName.size) {
 
+                    //사진 예시 용
                     var pic:Int = 0
-
-                    when(ingredientAmount[i].toInt()%7){
+                    when(Random().nextInt(9)){
                         0 -> pic = R.drawable.pic1_barbecue
                         1 -> pic = R.drawable.pic2_dairy_products
                         2 -> pic =(R.drawable.pic3_fruit)
@@ -140,7 +150,8 @@ class Tab1Fragment: Fragment() {
                         4 -> pic =(R.drawable.pic5_kimchi)
                         5 -> pic =(R.drawable.pic6_vegetable)
                         6 -> pic =(R.drawable.pic7_wine)
-                        else -> pic =(R.drawable.pic7_wine)
+                        8 -> pic =(R.drawable.pic8_seafood)
+                        else -> pic =(R.drawable.pic1_barbecue)
                     }
 
                     ingredientList.add(
@@ -148,10 +159,12 @@ class Tab1Fragment: Fragment() {
                             ingredientName[i],
                             ingredientAmount[i],
                             ingredientTime[i],
-                            pic
+                            pic,
+                            0
                         )
                     )
                 }
+                //남은 날짜 이른 순으로 정렬
                 var byYear = Comparator.comparing { obj: IngredientData -> obj.dateString.split("-")[0]}
                 var byMonth = Comparator.comparing { obj: IngredientData -> obj.dateString.split("-")[1]}
                 var byday = Comparator.comparing { obj: IngredientData -> obj.dateString.split("-")[2]}

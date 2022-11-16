@@ -19,6 +19,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="5dp"
         android:src="@drawable/pic4_harvest"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
