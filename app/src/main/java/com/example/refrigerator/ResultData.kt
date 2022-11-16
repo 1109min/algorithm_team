@@ -5,5 +5,6 @@ class ResultData (
         var ingredient : String,
         var amount : Int,
         var date : String,
-        var pic : Int
+        var pic : Int,
+        var star : Int
         )
