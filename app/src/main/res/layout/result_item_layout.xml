@@ -3,30 +3,45 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/ingredient_list_background"
-    android:layout_width="wrap_content"
+    android:layout_width="155dp"
     android:layout_height="wrap_content"
-
     android:elevation="4dp">
+    <TextView
+        android:id="@+id/food_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:paddingEnd="10dp"
+        android:fontFamily="@font/jua"
+        android:text="3일 전"
+        android:textSize="13sp"
+        android:textColor="@color/white"
+        android:background="@drawable/result_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+    </TextView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         >
         <ImageView
             android:id="@+id/food_pic"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="27dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
             android:src="@drawable/pic4_harvest"
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/ingredients"
-            app:layout_constraintEnd_toStartOf="@id/food_name"
+            app:layout_constraintBottom_toTopOf="@id/food_name"
+            app:layout_constraintEnd_toEndOf="parent"
 
             >
         </ImageView>
@@ -35,40 +50,25 @@
             android:id="@+id/food_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
+            android:padding="7dp"
 
             android:fontFamily="@font/jua"
             android:gravity="center_horizontal"
-            android:minHeight="20dp"
             android:text="이름"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="normal"
+            android:background="@drawable/bottom_of_layout"
+            android:backgroundTint="@color/grey"
 
-            app:layout_constraintBottom_toTopOf="@id/food_date"
-            app:layout_constraintEnd_toEndOf="@id/food_date"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/food_date"
-            app:layout_constraintTop_toTopOf="@id/food_pic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintVertical_bias="1.0">
 
         </TextView>
 
-        <TextView
-            android:id="@+id/food_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/jua"
-            android:text="2022-11-06"
-            android:textSize="15sp"
 
-            app:layout_constraintBottom_toBottomOf="@id/food_pic"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/food_pic"
-            app:layout_constraintTop_toTopOf="@id/food_pic"
-            app:layout_constraintVertical_bias="0.773">
-
-        </TextView>
 
         <TextView
             android:id="@+id/ingredients"
@@ -77,12 +77,13 @@
             android:layout_marginTop="10dp"
             android:fontFamily="@font/jua"
             android:text="땅콩"
-            android:textSize="15sp"
             android:textAlignment="center"
+            android:textSize="15sp"
 
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/food_pic"></TextView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

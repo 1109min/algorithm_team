@@ -55,9 +55,24 @@ class ResultRVAdapter(private val dataList: ArrayList<ResultData>): RecyclerView
             //viewBinding.ingredientPeriod.text = data.dateString
 
             var current = Timestamp(System.currentTimeMillis())
-            var sdf = SimpleDateFormat("MM-dd")
+            var sdf = SimpleDateFormat("yyyy-MM-dd")
             var currentdate = sdf.format(current)
-            viewBinding.foodDate.text = currentdate
+
+            val date1 = currentdate //날짜1
+            val date2 = data.date //날짜2
+
+            val format1: Date = SimpleDateFormat("yyyy-MM-dd").parse(date1)
+            val format2: Date = SimpleDateFormat("yyyy-MM-dd").parse(date2)
+
+            val diffSec: Long = (format1.getTime() - format2.getTime()) / 1000 //초 차이
+            val diffDays = diffSec / (24 * 60 * 60) //일자수 차이
+
+            when (diffDays.toInt()){
+                1 -> viewBinding.foodDate.text = "어제"
+                2 -> viewBinding.foodDate.text = "그저께"
+                7 -> viewBinding.foodDate.text = "일주일 전"
+                else -> viewBinding.foodDate.text = diffDays.toString() + "일 전"
+            }
         }
     }
 
