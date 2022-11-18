@@ -62,6 +62,12 @@ class Tab1Fragment: Fragment() {
 
 
         binding.tab1RV.adapter = adapter
+
+
+        val anim = AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.anim_slide)
+        binding.tab1RV.layoutAnimation = anim
+        binding.tab1RV.scheduleLayoutAnimation()
+
         binding.tab1RV.addItemDecoration(RVDecoration(30,1))
         //터치 시 화면 송출
 
@@ -84,10 +90,10 @@ class Tab1Fragment: Fragment() {
                 binding.dateItem.text = ingredientList[position].dateString
                 binding.picItem.setImageResource(ingredientList[position].pic)
 
-                    when(ingredientList[position].late) {
-                        2 -> binding.dateItem.setTextColor(Color.RED)
-                        1 -> binding.dateItem.setTextColor(Color.parseColor("#ff7f00"))
-                        0 -> binding.dateItem.setTextColor(Color.parseColor("#00DE00"))
+                    when(ingredientList[position].late) { //ff7f00 00de00
+                        2 -> binding.dateItem.setBackgroundResource(R.drawable.date_after)
+                        1 -> binding.dateItem.setBackgroundResource(R.drawable.date_caution)
+                        0 -> binding.dateItem.setBackgroundResource(R.drawable.date_safe)
                     }
 
             }override fun onLongClick(position: Int){

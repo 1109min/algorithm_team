@@ -3,14 +3,21 @@ package com.example.refrigerator
 import android.annotation.SuppressLint
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.example.refrigerator.databinding.RecipeItemLayoutBinding
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class RecipeRVAdapter(private val dataList: ArrayList<RecipeData>): RecyclerView.Adapter<RecyclerView.ViewHolder>(),ItemTouchHelperListener {
 
     private val checkRead = SparseBooleanArray()
+
 
     interface OnItemClickListener {
         fun onItemClick(position: Int)
@@ -25,7 +32,7 @@ class RecipeRVAdapter(private val dataList: ArrayList<RecipeData>): RecyclerView
 
 
     //viewHolder 객체
-    inner class DataViewHolder(private val viewBinding: RecipeItemLayoutBinding): RecyclerView.ViewHolder(viewBinding.root){
+    inner class DataViewHolder( val viewBinding: RecipeItemLayoutBinding): RecyclerView.ViewHolder(viewBinding.root){
 
         init {
             itemView.setOnClickListener {
@@ -42,8 +49,45 @@ class RecipeRVAdapter(private val dataList: ArrayList<RecipeData>): RecyclerView
 //                viewBinding.story.borderWidth = 0
 //            }
             viewBinding.ingredientName.text = data.name
-            viewBinding.ingredientAmount.text = data.ingredient[0].amount.toString() + "g"
+            viewBinding.ingredientAmount.text = data.ingredient[0].amount
             viewBinding.ingredientPeriod.text = data.ingredient[0].name
+
+
+
+            var info:String = ""
+            if (data.click==1){
+                viewBinding.needed.visibility = VISIBLE
+                for(i in 0 until data.ingredient.size-1) {
+
+                    var new_info =
+                        data.ingredient[i].name + " : " + data.ingredient[i].amount + "   "
+                    info += new_info
+                }
+                var new_info =
+                    data.ingredient[data.ingredient.size-1].name + " : " + data.ingredient[data.ingredient.size-1].amount
+
+                info += new_info
+                viewBinding.needed.text = info
+
+            }else{
+                viewBinding.needed.visibility = GONE
+            }
+
+            var pic:Int
+            when(Random().nextInt(9)){
+                0 -> pic = R.drawable.pic1_barbecue
+                1 -> pic = R.drawable.pic2_dairy_products
+                2 -> pic =(R.drawable.pic3_fruit)
+                3 -> pic =(R.drawable.pic4_harvest)
+                4 -> pic =(R.drawable.pic5_kimchi)
+                5 -> pic =(R.drawable.pic6_vegetable)
+                6 -> pic =(R.drawable.pic7_wine)
+                8 -> pic =(R.drawable.pic8_seafood)
+                else -> pic =(R.drawable.pic1_barbecue)
+            }
+
+
+            viewBinding.ingredientPic.setImageResource(pic)
 
 
 //            if (data.read) {
@@ -86,6 +130,10 @@ class RecipeRVAdapter(private val dataList: ArrayList<RecipeData>): RecyclerView
 
     //viewHolder가 실제로 데이터를 표시해야할 때 호출되는 함수
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if(dataList[position].click==0) {
+            (holder as DataViewHolder).viewBinding.root.animation =
+                AnimationUtils.loadAnimation(holder.viewBinding.root.context, R.anim.recipe_anim)
+        }
         (holder as DataViewHolder).bind(dataList[position])
     }
     //표현할 item의 총 개수
