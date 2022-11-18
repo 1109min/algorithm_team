@@ -50,15 +50,7 @@ class Tab2Fragment: Fragment() {
 
 
         recipeList.apply{
-            add(RecipeData("김치찌개","김치",100,0))
-            add(RecipeData("순두부찌개","순두부",200,0))
-            add(RecipeData("된장찌개","된장",150,0))
-            add(RecipeData("김치찌개","김치",100,0))
-            add(RecipeData("순두부찌개","순두부",200,0))
-            add(RecipeData("된장찌개","된장",150,0))
-            add(RecipeData("김치찌개","김치",100,0))
-            add(RecipeData("순두부찌개","순두부",200,0))
-            add(RecipeData("된장찌개","된장",150,0))
+            add(RecipeData("김치찌개", arrayListOf(needData("김치","100g",0),needData("고추장","200g",0)),,0))
         }
         adapter.notifyDataSetChanged()
 //firebase 연동

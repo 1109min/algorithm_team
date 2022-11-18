@@ -4,9 +4,9 @@
     <!--duration500 - 0.5초동안-->
     <!--fillAfter 종료 후 상태유지-->
     <translate
-        android:fromYDelta="-20%p"
-        android:toYDelta="40%p"
-        android:duration="1100"
+        android:fromYDelta="0%p"
+        android:toYDelta="-30%p"
+        android:duration="1800"
         android:repeatCount = "0"
         />
 

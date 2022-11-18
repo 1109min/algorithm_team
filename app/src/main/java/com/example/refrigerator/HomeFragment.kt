@@ -165,9 +165,17 @@ class HomeFragment : Fragment() {
             window=false
             binding.clickItem.visibility = View.GONE
         }
-//별점
+
+        val intentMake = Intent(this.context,MakeActivity::class.java)
+
+        binding.makeBtn.setOnClickListener{
+            startActivity(intentMake)
+        }
 
 
+
+
+        //별점
         star1.setOnClickListener{
 
             if( ResultList[po].star != 1) {

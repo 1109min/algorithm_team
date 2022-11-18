@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#efefef</color>
+    <color name="dishgrey">#bcbcbc</color>
     <color name="sky">#D6ECFF</color>
     <color name="blue">#50a7ee</color>
     <color name="btn_blue">#77BEF9</color>

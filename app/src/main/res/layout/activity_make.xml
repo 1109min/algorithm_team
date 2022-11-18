@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MakeActivity">
+
+    <ImageView
+        android:id="@+id/make_load"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+
+        android:src="@drawable/pic3_fruit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+    <ImageView
+        android:id="@+id/first"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/first"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/dish_top_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/dish_top_circle"
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/dish_top_circle"
+            app:layout_constraintBottom_toTopOf="@+id/dish_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/dish_top"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/dish_top"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dish_top_circle"
+            tools:layout_editor_absoluteX="81dp"
+            tools:layout_editor_absoluteY="193dp">
+
+        </ImageView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/dish_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/dish"
+            android:layout_width="250dp"
+            android:layout_height="20dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/dish"
+
+            app:layout_constraintBottom_toTopOf="@id/dish_bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"></ImageView>
+
+        <ImageView
+            android:id="@+id/dish_bottom"
+            android:layout_width="200dp"
+            android:layout_height="12dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/dish_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"></ImageView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/menu_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.5">
+
+    <TextView
+        android:id="@+id/menu_name"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/top_of_layout"
+        android:backgroundTint="@color/btn_blue"
+
+        android:fontFamily="@font/jua"
+        android:padding="10dp"
+        android:text="메뉴 이름"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="23sp"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/menu_ingredient"
+        ></TextView>
+
+    <TextView
+        android:id="@+id/menu_ingredient"
+        android:layout_width="320dp"
+        android:layout_height="250dp"
+        android:background="@drawable/bottom_of_layout"
+        android:backgroundTint="@color/grey"
+
+        android:fontFamily="@font/jua"
+        android:padding="10dp"
+        android:text="김치\n참치"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="23sp"
+        app:layout_constraintTop_toBottomOf="@id/menu_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"></TextView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
