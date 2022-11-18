@@ -119,7 +119,7 @@
                 android:padding="5dp"
 
                 android:src="@drawable/ic_baseline_close_24"
-                android:background="@drawable/date_safe"
+                android:background="@drawable/close_layout"
                 android:backgroundTint="@color/new_blue"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">

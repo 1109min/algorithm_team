@@ -226,6 +226,74 @@ class HomeFragment : Fragment() {
             adapter.notifyDataSetChanged()
         }
 
+        val intentMake = Intent(this.context,MakeActivity::class.java)
+
+        binding.makeBtn.setOnClickListener{
+            startActivity(intentMake)
+        }
+
+
+
+
+        //별점
+        star1.setOnClickListener{
+
+            if( ResultList[po].star != 1) {
+                star1.setBackgroundResource(R.drawable.ic_baseline_star_24)
+                star2.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
+                star3.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
+                star4.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
+                star5.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
+
+                ResultList[po].star = 1
+            }else{
+                star1.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
+                star2.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
+                star3.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
+                star4.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
+                star5.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
+
+                ResultList[po].star = 0
+            }
+            adapter.notifyDataSetChanged()
+        }
+        star2.setOnClickListener{
+            star1.setBackgroundResource(R.drawable.ic_baseline_star_24)
+            star2.setBackgroundResource(R.drawable.ic_baseline_star_24)
+            star3.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
+            star4.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
+            star5.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
+            ResultList[po].star = 2
+            adapter.notifyDataSetChanged()
+        }
+        star3.setOnClickListener{
+            star1.setBackgroundResource(R.drawable.ic_baseline_star_24)
+            star2.setBackgroundResource(R.drawable.ic_baseline_star_24)
+            star3.setBackgroundResource(R.drawable.ic_baseline_star_24)
+            star4.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
+            star5.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
+            ResultList[po].star = 3
+            adapter.notifyDataSetChanged()
+        }
+        star4.setOnClickListener{
+            star1.setBackgroundResource(R.drawable.ic_baseline_star_24)
+            star2.setBackgroundResource(R.drawable.ic_baseline_star_24)
+            star3.setBackgroundResource(R.drawable.ic_baseline_star_24)
+            star4.setBackgroundResource(R.drawable.ic_baseline_star_24)
+            star5.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
+            ResultList[po].star = 4
+            adapter.notifyDataSetChanged()
+        }
+        star5.setOnClickListener{
+            star1.setBackgroundResource(R.drawable.ic_baseline_star_24)
+            star2.setBackgroundResource(R.drawable.ic_baseline_star_24)
+            star3.setBackgroundResource(R.drawable.ic_baseline_star_24)
+            star4.setBackgroundResource(R.drawable.ic_baseline_star_24)
+            star5.setBackgroundResource(R.drawable.ic_baseline_star_24)
+            ResultList[po].star = 5
+            adapter.notifyDataSetChanged()
+        }
+
 
 
 
