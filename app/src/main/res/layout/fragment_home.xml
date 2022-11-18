@@ -53,6 +53,7 @@
             android:layout_width="270dp"
             android:layout_height="wrap_content"
             android:visibility="gone"
+
             android:background="@drawable/background_layout"
             android:backgroundTint="@color/white"
             app:layout_constraintStart_toStartOf="parent"
