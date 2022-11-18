@@ -50,7 +50,7 @@ class Tab2Fragment: Fragment() {
 
 
         recipeList.apply{
-            add(RecipeData("김치찌개", arrayListOf(needData("김치","100g",0),needData("고추장","200g",0)),,0))
+            add(RecipeData("김치찌개", arrayListOf(needData("김치","100g",0),needData("고추장","200g",0)),0))
         }
         adapter.notifyDataSetChanged()
 //firebase 연동

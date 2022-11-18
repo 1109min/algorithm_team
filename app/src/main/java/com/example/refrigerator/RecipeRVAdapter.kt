@@ -42,8 +42,8 @@ class RecipeRVAdapter(private val dataList: ArrayList<RecipeData>): RecyclerView
 //                viewBinding.story.borderWidth = 0
 //            }
             viewBinding.ingredientName.text = data.name
-            viewBinding.ingredientAmount.text = data.amount.toString() + "g"
-            viewBinding.ingredientPeriod.text = data.ingredient
+            viewBinding.ingredientAmount.text = data.ingredient[0].amount.toString() + "g"
+            viewBinding.ingredientPeriod.text = data.ingredient[0].name
 
 
 //            if (data.read) {
