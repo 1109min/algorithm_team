@@ -65,7 +65,6 @@
             android:id="@+id/ingredient_period"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="9"
             android:padding="5dp"
             android:textSize="15sp"
             android:textColor="@color/white"
