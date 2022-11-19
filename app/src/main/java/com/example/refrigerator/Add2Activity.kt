@@ -6,24 +6,29 @@ import android.os.Bundle
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.refrigerator.databinding.ActivityAdd1Binding
+import com.example.refrigerator.databinding.ActivityAdd2Binding
 import kotlin.collections.ArrayList
 
-class Add1Activity : AppCompatActivity() {
+class Add2Activity : AppCompatActivity() {
 
-    private val binding: ActivityAdd1Binding by lazy {
-        ActivityAdd1Binding.inflate(layoutInflater)
+    private val binding: ActivityAdd2Binding by lazy {
+        ActivityAdd2Binding.inflate(layoutInflater)
     }
-    val dataList: ArrayList<needData> = arrayListOf()
+    val dataList: ArrayList<IngredientData> = arrayListOf()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        var intent = Intent(this, MainActivity::class.java)
 
         binding.addRv.layoutManager = LinearLayoutManager(this,
             RecyclerView.VERTICAL,false)
 
-        val adapter = AddMenuRVAdapter(dataList)
+        val adapter = AddingredientRVAdapter(dataList)
+
+        //binding.mainFeed.adapter = Postadapter
+        binding.addRv.adapter = adapter
+//아이템 스와이프
         val itemTouchHelperCallback = ItemTouchHelperCallback(adapter)
 
         // ItemTouchHelper의 생성자로 ItemTouchHelper.Callback 객체 셋팅
@@ -31,11 +36,9 @@ class Add1Activity : AppCompatActivity() {
         // RecyclerView에 ItemTouchHelper 연결
 
         helper.attachToRecyclerView(binding.addRv)
-        //binding.mainFeed.adapter = Postadapter
-        binding.addRv.adapter = adapter
 
         binding.addRv.addItemDecoration(RVDecoration(20,1))
-        adapter.setMyItemClickListener(object : AddMenuRVAdapter.OnItemClickListener {
+        adapter.setMyItemClickListener(object : AddingredientRVAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
 
 
@@ -44,18 +47,18 @@ class Add1Activity : AppCompatActivity() {
             }
         })
 
-        var menudata : ArrayList<RecipeData> = arrayListOf()
+        var data : ArrayList<IngredientData> = arrayListOf()
 
-        val intent = Intent(this, MainActivity::class.java)
 
         var inname = binding.ingredientNameET
         var inamount = binding.ingredientAmountET
+        var indate = binding.ingredientDateET
 
         binding.menuAddBtn.setOnClickListener {
 
-            menudata.add(0,RecipeData(binding.menuNameET.text.toString(),dataList,0,0,0))
 
-            intent.putExtra("menu",menudata)
+
+            intent.putExtra("ingredient",dataList)
             setResult(RESULT_OK, intent)
             finish()
         }
@@ -65,10 +68,12 @@ class Add1Activity : AppCompatActivity() {
             } else {
                 dataList.add(
                     dataList.size,
-                    needData(inname.text.toString(), inamount.text.toString(), 0)
-                )
+                    IngredientData(inname.text.toString(),inamount.text.toString(),indate.text.toString(),0,0))
+
                 inname.setText("")
                 inamount.setText("")
+                indate.setText("00-00-00")
+
                 adapter.notifyDataSetChanged()
 
             }

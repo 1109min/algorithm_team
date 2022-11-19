@@ -3,6 +3,7 @@ package com.example.refrigerator
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.animation.Animation
@@ -58,6 +59,14 @@ class MainActivity : AppCompatActivity() {
             .replace(viewBinding.containerFragment.id,HomeFragment()) //add를 하면 겹친다
             .commitAllowingStateLoss() //그냥 commit하면 에러날 수도 있음
 
+        var fragment_home = HomeFragment()
+        var bundle_home = Bundle()
+        var results : ArrayList<ResultData> = arrayListOf()
+
+//        bundle_home.putSerializable("results",results)
+//        bundle_home.putParcelableArrayList("results",results)
+        fragment_home.arguments = bundle_home
+
         viewBinding.navBottom.run{
             setOnItemSelectedListener {
                 when(it.itemId){
@@ -100,6 +109,7 @@ class MainActivity : AppCompatActivity() {
             toggleFab()
         }
         val intent = Intent(this, Add1Activity::class.java)
+        val intent2 = Intent(this, Add2Activity::class.java)
 
         //메뉴추가하러가기
         fab_sub1!!.setOnClickListener{
@@ -107,6 +117,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         fab_sub2!!.setOnClickListener {
+            resultLauncher.launch(intent2)
 
         }
         viewBinding.btnBackLayout.setOnClickListener {
@@ -117,6 +128,8 @@ class MainActivity : AppCompatActivity() {
 
 
         //리스트 받아오기
+        var menuList : ArrayList<RecipeData> = arrayListOf()
+
         resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 toggleFab()
@@ -153,3 +166,5 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
+
+

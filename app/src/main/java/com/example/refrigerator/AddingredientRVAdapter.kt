@@ -6,6 +6,7 @@ import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.refrigerator.databinding.AddEdt2LayoutBinding
 import com.example.refrigerator.databinding.AddEdtLayoutBinding
 import com.example.refrigerator.databinding.AddLayoutBinding
 import com.example.refrigerator.databinding.IngredientItemLayout2Binding
@@ -17,7 +18,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class AddMenuRVAdapter(private val dataList: ArrayList<needData>): RecyclerView.Adapter<RecyclerView.ViewHolder>(), ItemTouchHelperListener {
+class AddingredientRVAdapter(private val dataList: ArrayList<IngredientData>): RecyclerView.Adapter<RecyclerView.ViewHolder>(), ItemTouchHelperListener {
 
     private val checkRead = SparseBooleanArray()
     var canRemove : Boolean = true
@@ -34,7 +35,7 @@ class AddMenuRVAdapter(private val dataList: ArrayList<needData>): RecyclerView.
     }
 
     //viewHolder 객체
-    inner class DataViewHolder(private val viewBinding: AddEdtLayoutBinding): RecyclerView.ViewHolder(viewBinding.root){
+    inner class DataViewHolder(private val viewBinding: AddEdt2LayoutBinding): RecyclerView.ViewHolder(viewBinding.root){
 
         init {
             itemView.setOnClickListener {
@@ -46,11 +47,15 @@ class AddMenuRVAdapter(private val dataList: ArrayList<needData>): RecyclerView.
             }
         }
         @SuppressLint("ResourceAsColor", "SuspiciousIndentation")
-        fun bind(data: needData) {
+        fun bind(data: IngredientData) {
 
-            viewBinding.ingredientNameET.setText(data.name)
+            viewBinding.nameItem.setText(data.name)
 
-            viewBinding.ingredientAmountET.setText(data.amount)
+            viewBinding.amountItem.setText(data.amount)
+
+            viewBinding.dateItem.setText(data.dateString)
+
+            viewBinding.picItem.setImageResource(R.drawable.pic1_barbecue)
         }
     }
 
@@ -60,36 +65,36 @@ class AddMenuRVAdapter(private val dataList: ArrayList<needData>): RecyclerView.
 
     //viewHolder 만들어질때 실행할 동작들
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-                val Binding = AddEdtLayoutBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent, false)
+        val Binding = AddEdt2LayoutBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent, false)
 
-                    return   DataViewHolder(Binding)
+        return   DataViewHolder(Binding)
 
     }
 
     //viewHolder가 실제로 데이터를 표시해야할 때 호출되는 함수
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-                (holder as DataViewHolder).bind(dataList[position])
-                //holder.setIsRecyclable(false)
+        (holder as DataViewHolder).bind(dataList[position])
+        //holder.setIsRecyclable(false)
 
 
     }
     //표현할 item의 총 개수
     override fun getItemCount(): Int = dataList.size
 
-    fun addItem(data : needData) {
+    fun addItem(data : IngredientData) {
         dataList.add(data);
     }
 
-    fun getItem(position : Int): needData {
+    fun getItem(position : Int): IngredientData {
         return dataList.get(position);
     }
 
 
 
-    fun addUserItems(data: needData){
+    fun addUserItems(data: IngredientData){
         dataList.add(data)
         notifyItemInserted(getItemCount()-1)
     }
