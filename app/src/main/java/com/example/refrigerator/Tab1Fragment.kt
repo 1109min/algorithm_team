@@ -74,6 +74,7 @@ class Tab1Fragment: Fragment() {
         fab_open = AnimationUtils.loadAnimation(this.activity, R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(this.activity, R.anim.fab_close);
 
+
         //각 아이템을 클릭했을 때
         adapter.setMyItemClickListener(object : IngredientRVAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
@@ -212,6 +213,8 @@ class Tab1Fragment: Fragment() {
                     binding.clickItem.visibility = GONE
                     binding.clickItem.isClickable=false
                 }else{
+                    (activity as MainActivity?)?.gohome()
+
                     (activity as MainActivity?)
                         ?.supportFragmentManager
                         ?.beginTransaction()

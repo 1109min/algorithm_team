@@ -1,12 +1,18 @@
 package com.example.refrigerator
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.refrigerator.databinding.ActivityAdd1Binding
 import com.example.refrigerator.databinding.ActivityMainBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -28,6 +34,20 @@ class MainActivity : AppCompatActivity() {
     lateinit var mbd: Animation
     lateinit var mbu: Animation
 
+
+    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
+
+    fun gohome(){
+        viewBinding.navBottom.run{
+
+                        supportFragmentManager
+                            .beginTransaction()
+                            .replace(viewBinding.containerFragment.id,HomeFragment())
+                            .commitAllowingStateLoss()
+            selectedItemId = R.id.menu_home
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(viewBinding.root)
@@ -38,6 +58,14 @@ class MainActivity : AppCompatActivity() {
             .beginTransaction()
             .replace(viewBinding.containerFragment.id,HomeFragment()) //add를 하면 겹친다
             .commitAllowingStateLoss() //그냥 commit하면 에러날 수도 있음
+
+        var fragment_home = HomeFragment()
+        var bundle_home = Bundle()
+        var results : ArrayList<ResultData> = arrayListOf()
+
+//        bundle_home.putSerializable("results",results)
+//        bundle_home.putParcelableArrayList("results",results)
+        fragment_home.arguments = bundle_home
 
         viewBinding.navBottom.run{
             setOnItemSelectedListener {
@@ -80,12 +108,16 @@ class MainActivity : AppCompatActivity() {
         fab_main!!.setOnClickListener{
             toggleFab()
         }
+        val intent = Intent(this, Add1Activity::class.java)
+        val intent2 = Intent(this, Add2Activity::class.java)
 
+        //메뉴추가하러가기
         fab_sub1!!.setOnClickListener{
-
+            resultLauncher.launch(intent)
         }
 
         fab_sub2!!.setOnClickListener {
+            resultLauncher.launch(intent2)
 
         }
         viewBinding.btnBackLayout.setOnClickListener {
@@ -94,6 +126,15 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+
+        //리스트 받아오기
+        var menuList : ArrayList<RecipeData> = arrayListOf()
+
+        resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                toggleFab()
+            }
+        }
 
     }
     private fun toggleFab() {
@@ -123,4 +164,7 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
     }
+
 }
+
+

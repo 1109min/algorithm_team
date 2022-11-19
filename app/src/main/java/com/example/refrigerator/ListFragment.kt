@@ -28,6 +28,7 @@ class ListFragment : Fragment() {
             "재료",
             "메뉴",
         )
+
         TabLayoutMediator(viewBinding.tabList, viewBinding.vpList) { tab,position ->
             tab.text = tabTitleArray[position]
         }.attach()

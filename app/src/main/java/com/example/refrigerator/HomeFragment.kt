@@ -2,25 +2,20 @@ package com.example.refrigerator
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.example.refrigerator.databinding.ActivityMainBinding
 import com.example.refrigerator.databinding.FragmentHomeBinding
-import com.example.refrigerator.databinding.FragmentTab1Binding
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
@@ -58,6 +53,11 @@ class HomeFragment : Fragment() {
 
         binding.homeRv.adapter = adapter
         binding.homeRv.addItemDecoration(RVDecoration(50,1))
+
+        val anim = AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.anim_slide)
+        binding.homeRv.layoutAnimation = anim
+        binding.homeRv.scheduleLayoutAnimation()
+
         //터치 시 화면 송출
         ResultList.apply {
             add(ResultData("김치찌개","김치",100,"2022-10-31",R.drawable.pic8_seafood,0))

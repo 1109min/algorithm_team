@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_layout"
+    android:backgroundTint="@color/back_sky"
+    android:padding="15dp"
+    android:elevation="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/click_item"
+        android:layout_width="270dp"
+        android:layout_height="150dp"
+
+        android:background="@drawable/background_layout"
+        android:backgroundTint="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+        <ImageView
+            android:id="@+id/pic_item"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="25dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+        </ImageView>
+
+        <TextView
+            android:id="@+id/name_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+
+            android:ellipsize="end"
+            android:fontFamily="@font/jua"
+            android:singleLine="true"
+            android:text="이름"
+
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toTopOf="@id/amount_item"
+            app:layout_constraintEnd_toEndOf="@+id/amount_item"
+            app:layout_constraintStart_toStartOf="@+id/amount_item"></TextView>
+
+        <TextView
+            android:id="@+id/amount_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:fontFamily="@font/jua"
+            android:text="100g"
+            android:textSize="18sp"
+            android:textStyle="normal"
+
+            app:layout_constraintBottom_toBottomOf="@+id/pic_item"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/pic_item"
+            app:layout_constraintTop_toTopOf="@+id/pic_item">
+
+        </TextView>
+        <TextView
+            android:id="@+id/border"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="0dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/date_item"
+            app:layout_constraintTop_toBottomOf="@id/pic_item"
+            android:background="@drawable/top_border"
+            >
+
+        </TextView>
+        <TextView
+            android:id="@+id/date_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="5dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:gravity="center_horizontal"
+
+            android:fontFamily="@font/jua"
+            android:text="2022-11-09"
+            android:textSize="18sp"
+            android:textStyle="normal"
+            android:textColor="@color/white"
+
+            android:background="@drawable/background_layout"
+            app:layout_constraintTop_toBottomOf="@id/border"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            ></TextView>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

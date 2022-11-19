@@ -33,6 +33,14 @@
         android:theme="@style/Theme.Refrigerator"
         tools:targetApi="31">
         <activity
+            android:name=".Add2Activity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity android:name=".Add1Activity"></activity>
+        <activity
             android:name=".MakeActivity"
             android:exported="false">
             <meta-data

@@ -55,12 +55,19 @@ class RecipeRVAdapter(private val dataList: ArrayList<RecipeData>): RecyclerView
 
 
             var info:String = ""
-            if (data.click==1){
+            if (data.state == 1){
                 viewBinding.needed.visibility = VISIBLE
                 for(i in 0 until data.ingredient.size-1) {
 
                     var new_info =
-                        data.ingredient[i].name + " : " + data.ingredient[i].amount + "   "
+                        data.ingredient[i].name + " : " + data.ingredient[i].amount
+
+
+                    if(i%2==0){
+                        new_info += "\n"
+                    }else{
+                        new_info += "   "
+                    }
                     info += new_info
                 }
                 var new_info =
@@ -68,9 +75,10 @@ class RecipeRVAdapter(private val dataList: ArrayList<RecipeData>): RecyclerView
 
                 info += new_info
                 viewBinding.needed.text = info
-
-            }else{
+                data.click = 2
+            }else if(data.state == 0 || data.click == 2){
                 viewBinding.needed.visibility = GONE
+                    data.click=0
             }
 
             var pic:Int
@@ -130,11 +138,14 @@ class RecipeRVAdapter(private val dataList: ArrayList<RecipeData>): RecyclerView
 
     //viewHolder가 실제로 데이터를 표시해야할 때 호출되는 함수
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if(dataList[position].click==0) {
-            (holder as DataViewHolder).viewBinding.root.animation =
-                AnimationUtils.loadAnimation(holder.viewBinding.root.context, R.anim.recipe_anim)
+        if(dataList[position].click==1 || dataList[position].click==1) {
+                (holder as DataViewHolder).bind(dataList[position])
         }
-        (holder as DataViewHolder).bind(dataList[position])
+        else{
+                (holder as DataViewHolder).viewBinding.root.animation =
+                AnimationUtils.loadAnimation(holder.viewBinding.root.context, R.anim.recipe_anim)
+                (holder as DataViewHolder).bind(dataList[position])
+        }
     }
     //표현할 item의 총 개수
     override fun getItemCount(): Int = dataList.size
