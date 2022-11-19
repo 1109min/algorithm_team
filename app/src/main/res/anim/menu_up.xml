@@ -6,7 +6,7 @@
     <translate
         android:fromYDelta="0%p"
         android:toYDelta="-30%p"
-        android:duration="1800"
+        android:duration="1500"
         android:repeatCount = "0"
         />
 

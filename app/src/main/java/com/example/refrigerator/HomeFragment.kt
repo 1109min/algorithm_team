@@ -58,6 +58,11 @@ class HomeFragment : Fragment() {
 
         binding.homeRv.adapter = adapter
         binding.homeRv.addItemDecoration(RVDecoration(50,1))
+
+        val anim = AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.anim_slide)
+        binding.homeRv.layoutAnimation = anim
+        binding.homeRv.scheduleLayoutAnimation()
+
         //터치 시 화면 송출
         ResultList.apply {
             add(ResultData("김치찌개","김치",100,"2022-10-31",R.drawable.pic8_seafood,0))

@@ -212,6 +212,8 @@ class Tab1Fragment: Fragment() {
                     binding.clickItem.visibility = GONE
                     binding.clickItem.isClickable=false
                 }else{
+                    (activity as MainActivity?)?.gohome()
+
                     (activity as MainActivity?)
                         ?.supportFragmentManager
                         ?.beginTransaction()
