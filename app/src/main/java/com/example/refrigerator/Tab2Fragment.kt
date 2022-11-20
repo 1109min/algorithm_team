@@ -167,6 +167,7 @@ class Tab2Fragment: Fragment() {
                     var item = snapshot.toObject(RecipeData::class.java)
                     recipes.add(item!!)
                 }
+                recipes.sortBy { it.name }
                 adapter.notifyDataSetChanged()
             }
 
@@ -194,6 +195,9 @@ class Tab2Fragment: Fragment() {
                 adapter.notifyItemChanged(position)
             }override fun onLongClick(position: Int) {
                 recipes.removeAt(position)
+
+                recipes.sortBy { it.name }
+
                 firestore!!.collection("recipes").document(position.toString())
                     .delete()
                 for (i in 0 until recipes.size) {

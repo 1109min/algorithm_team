@@ -36,7 +36,6 @@ class HomeFragment : Fragment() {
 
     private lateinit var callback: OnBackPressedCallback
     var window: Boolean = false
-
     var firestore: FirebaseFirestore? = null
     val handler: Handler = object : Handler(Looper.getMainLooper()) {
         @RequiresApi(Build.VERSION_CODES.N)
@@ -153,9 +152,9 @@ class HomeFragment : Fragment() {
         binding.homeRv.adapter = adapter
         binding.homeRv.addItemDecoration(RVDecoration(50, 1))
 
+        binding.homeRv.scheduleLayoutAnimation()
         val anim = AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.anim_slide)
         binding.homeRv.layoutAnimation = anim
-        binding.homeRv.scheduleLayoutAnimation()
 
         binding.clickItem.visibility = GONE
         firestore = FirebaseFirestore.getInstance()
@@ -526,7 +525,6 @@ class HomeFragment : Fragment() {
 
 
 
-
         return binding.root
     }
 
@@ -560,8 +558,12 @@ class HomeFragment : Fragment() {
     }
 
     override fun onResume() {
+//        val anim = AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.anim_slide)
+//        binding.homeRv.layoutAnimation = anim
+//        binding.homeRv.scheduleLayoutAnimation()
+        binding.homeRv.scheduleLayoutAnimation()
 
-        adapter.notifyDataSetChanged()
-        super.onResume()
+            adapter.notifyDataSetChanged()
+            super.onResume()
     }
 }

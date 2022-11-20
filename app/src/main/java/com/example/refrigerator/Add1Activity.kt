@@ -3,6 +3,7 @@ package com.example.refrigerator
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -74,6 +75,7 @@ class Add1Activity : AppCompatActivity() {
             for(i in 0 until origin_recipes.size) {
                 firestore!!.collection("recipes").document(i.toString())
                     .set(origin_recipes[i])
+                Log.d("why",i.toString())
             }
 
 
