@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.animation.Animation
@@ -15,6 +16,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.refrigerator.databinding.ActivityAdd1Binding
 import com.example.refrigerator.databinding.ActivityMainBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class MainActivity : AppCompatActivity() {
@@ -110,7 +113,7 @@ class MainActivity : AppCompatActivity() {
         }
         val intent = Intent(this, Add1Activity::class.java)
         val intent2 = Intent(this, Add2Activity::class.java)
-
+        intent2.putExtra("test","test2")
         //메뉴추가하러가기
         fab_sub1!!.setOnClickListener{
             resultLauncher.launch(intent)
@@ -126,13 +129,72 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        var firestore: FirebaseFirestore? = null
+        var uid: String? = null
+        uid = FirebaseAuth.getInstance().currentUser?.uid
+        firestore = FirebaseFirestore.getInstance()
+
+
+
+        var recipes : ArrayList<RecipeData> = arrayListOf()
+        firestore?.collection("recipes")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+            // ArrayList 비워줌
+            recipes.clear()
+
+            for (snapshot in querySnapshot!!.documents) {
+                var item = snapshot.toObject(RecipeData::class.java)
+                recipes.add(item!!)
+            }
+        }
+
+
+        var ingredients : ArrayList<IngredientData> = arrayListOf()
+        firestore = FirebaseFirestore.getInstance()
+        firestore?.collection("recipes")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+            // ArrayList 비워줌
+            ingredients.clear()
+
+            for (snapshot in querySnapshot!!.documents) {
+                var item = snapshot.toObject(IngredientData::class.java)
+                ingredients.add(item!!)
+            }
+        }
+
+
 
         //리스트 받아오기
         var menuList : ArrayList<RecipeData> = arrayListOf()
+        var ingredient : ArrayList<IngredientData> = arrayListOf()
+
+        firestore = FirebaseFirestore.getInstance()
 
         resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                toggleFab()
+//                var menu_check : String = result.data?.getStringExtra("menu_check") ?: ""
+//                var in_check : String = result.data?.getStringExtra("in_check") ?: ""
+//                var index : Int = result.data?.getIntExtra("index") ?: 0
+//                Log.d("DDDDDd","fffffffffff")
+//
+//
+//                if(menu_check.equals("1")){
+//
+//                    var menuList : ArrayList<RecipeData> = result.data?.getSerializableExtra("menu") as ArrayList<RecipeData>
+//                    firestore.collection("recipes").document(recipes.size.toString()).set(menuList[0])
+//                    Log.d("DDDDDd","fdfdfd")
+//                }
+//
+//                if(in_check.equals("1")){
+//                    var ingredient = result.data?.getSerializableExtra("ingredient") as ArrayList<IngredientData>
+//                    //firestore.collection("ingredient").document(ingredients.size.toString()).set(ingredient)
+//
+//                            for(i in 0 until ingredient.size) {
+//                    firestore.collection("ingredient").document((ingredients.size).toString()).set(ingredient[i])
+//                    }
+//                    Log.d("DDDDDd","ssssssss")
+//
+//                }
+
+
             }
         }
 

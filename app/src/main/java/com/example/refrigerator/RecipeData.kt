@@ -5,15 +5,15 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
-class RecipeData(
-    var name : String,
+data class RecipeData(
+    var name : String ="",
 
-    var ingredient : ArrayList<needData>,
+    var ingredient : ArrayList<needData> = arrayListOf(needData("","",0)),
 
-    var pic : Int,
+    var pic : Int = 0,
 
-    var click : Int,
+    var click : Int = 0,
 
-    var state : Int
+    var state : Int = 0
 
-) : Serializable
+):Serializable

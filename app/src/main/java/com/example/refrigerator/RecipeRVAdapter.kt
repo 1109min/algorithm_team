@@ -10,6 +10,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.example.refrigerator.databinding.RecipeItemLayoutBinding
+import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -17,7 +18,6 @@ import kotlin.collections.ArrayList
 class RecipeRVAdapter(private val dataList: ArrayList<RecipeData>): RecyclerView.Adapter<RecyclerView.ViewHolder>(),ItemTouchHelperListener {
 
     private val checkRead = SparseBooleanArray()
-
 
     interface OnItemClickListener {
         fun onItemClick(position: Int)

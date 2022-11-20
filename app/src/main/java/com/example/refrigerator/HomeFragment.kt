@@ -4,9 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -35,6 +37,8 @@ class HomeFragment : Fragment() {
     private lateinit var callback: OnBackPressedCallback
     var window: Boolean = false
 
+    var firestore: FirebaseFirestore? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -58,23 +62,83 @@ class HomeFragment : Fragment() {
         binding.homeRv.layoutAnimation = anim
         binding.homeRv.scheduleLayoutAnimation()
 
-        //터치 시 화면 송출
-        ResultList.apply {
-            add(ResultData("김치찌개","김치",100,"2022-10-31",R.drawable.pic8_seafood,0))
-            add(ResultData("순두부찌개","순두부",100,"2022-11-02",R.drawable.pic1_barbecue,0))
-            add(ResultData("된장찌개","된장",100,"2022-11-04",R.drawable.pic7_wine,0))
-            add(ResultData("김치찌개","김치",100,"2022-11-07",R.drawable.pic3_fruit,0))
-            add(ResultData("순두부찌개","순두부",100,"2022-11-08",R.drawable.pic4_harvest,0))
-            add(ResultData("된장찌개","된장",100,"2022-11-11",R.drawable.pic5_kimchi,0))
-            add(ResultData("김치찌개","김치",100,"2022-11-13",R.drawable.pic6_vegetable,0))
-            add(ResultData("순두부찌개","순두부",100,"2022-11-14",R.drawable.pic8_seafood,0))
-            add(ResultData("된장찌개","된장",1100,"2022-11-15",R.drawable.pic2_dairy_products,0))
+        binding.clickItem.visibility=GONE
+        firestore = FirebaseFirestore.getInstance()
+        var results : ArrayList<ResultData> = arrayListOf()
+
+        //읽어오기
+        firestore?.collection("results")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+            // ArrayList 비워줌
+            ResultList.clear()
+
+            for (snapshot in querySnapshot!!.documents) {
+                var item = snapshot.toObject(ResultData::class.java)
+                ResultList.add(item!!)
+            }
         }
+
+
+//        //터치 시 화면 송출
+//        ResultList.apply {
+//            add(ResultData("김치찌개", arrayListOf(
+//                needData("김치","100g",0),
+//                needData("돼지고기","100g",0),
+//                needData("대파","30g",0),
+//                needData("마늘","20g",0),
+//            ),"2022-10-31",R.drawable.pic8_seafood,0))
+//
+//            add(ResultData("된장찌개", arrayListOf(
+//                needData("된장","300g",0),
+//                needData("양파","300g",0),
+//                needData("소금","5g",0),
+//                needData("마늘","20g",0),
+//                needData("청양고추","40g",0),
+//                needData("설탕","5g",0),
+//                needData("애호박","100g",0),
+//                needData("감자","50g",0),
+//                ),"2022-11-02",R.drawable.pic1_barbecue,0))
+//
+//            add(ResultData("부대찌개", arrayListOf(
+//                needData("돼지고기","200g",0),
+//                needData("양파","50g",0),
+//                needData("후추","50g",0),
+//                needData("대파","20g",0),
+//                needData("김치","50g",0),
+//                needData("마늘","100g",0),
+//                needData("소시지","50g",0),
+//            ),"2022-11-07",R.drawable.pic2_dairy_products,0))
+//
+//            add(ResultData("돼지고기숙주볶음", arrayListOf(
+//                needData("돼지고기","180g",0),
+//                needData("숙주","210g",0),
+//                needData("대파","50g",0),
+//                needData("마늘","50g",0)
+//            ),"2022-11-10",R.drawable.pic3_fruit,0))
+//
+//            add(ResultData("오징어볶음", arrayListOf(
+//                needData("오징어","600g",0),
+//                needData("양배추","100g",0),
+//                needData("당근","200g",0),
+//                needData("양파","150g",0),
+//                needData("파","100g",0),
+//                needData("마늘","20g",0),
+//                needData("청양고추","20g",0),
+//                needData("설탕","10g",0)
+//            ),"2022-11-19",R.drawable.pic2_dairy_products,0))
+//        }
+
         var byYear = Comparator.comparing { obj: ResultData -> obj.date.split("-")[0]}
         var byMonth = Comparator.comparing { obj: ResultData -> obj.date.split("-")[1]}
         var byday = Comparator.comparing { obj: ResultData -> obj.date.split("-")[2]}
         ResultList.sortWith(byYear.thenComparing(byMonth.thenComparing(byday)))
         ResultList.reverse()
+
+//        //쓰기
+//        for(i in 0 until ResultList.size) {
+//            firestore!!.collection("results").document(i.toString())
+//                .set(ResultList[i])
+//            Log.d("wow",ResultList.size.toString()+" "+ResultList[i].toString()+"kjkjk "+i)
+//        }
 
         adapter.notifyDataSetChanged()
         fab_open = AnimationUtils.loadAnimation(this.activity, R.anim.fab_open);
@@ -102,7 +166,26 @@ class HomeFragment : Fragment() {
 
                 binding.nameItem.text = ResultList[position].name
                 binding.dateItem.text = ResultList[position].date
-                binding.ingredsItem.text = ResultList[position].ingredient
+
+                var info:String = ""
+                for(i in 0 until ResultList[position].ingredients.size-1) {
+
+                    var new_info =
+                        ResultList[position].ingredients[i].name + " : " + ResultList[position].ingredients[i].amount
+
+
+                    if(i%2==0){
+                        new_info += "\n"
+                    }else{
+                        new_info += "   "
+                    }
+                    info += new_info
+                }
+                var new_info =
+                    ResultList[position].ingredients[ResultList[position].ingredients.size-1].name + " : " + ResultList[position].ingredients[ResultList[position].ingredients.size-1].amount
+
+                info += new_info
+                binding.ingredsItem.text = info
                 binding.picItem.setImageResource(ResultList[position].pic)
                 when(ResultList[po].star){
                     0 -> {
