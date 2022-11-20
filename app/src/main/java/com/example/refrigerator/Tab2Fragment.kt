@@ -48,102 +48,99 @@ class Tab2Fragment: Fragment() {
     ): View? {
         binding = FragmentTab2Binding.inflate(inflater, container, false)
 
-        //room db
-        val act = requireActivity().application
-//        val roomDb = AppDatabase.getInstance(act)
 
-//        recipeList.apply{
-//            add(RecipeData("김치찌개", arrayListOf(
-//                needData("김치","300g",0),
-//                needData("돼지고기","100g",0),
-//                needData("대파","30g",0),
-//                needData("마늘","20g",0)
-//            ),0,0,0))
-//            add(RecipeData("된장찌개", arrayListOf(
-//                needData("된장","300g",0),
-//                needData("양파","300g",0),
-//                needData("소금","5g",0),
-//                needData("마늘","20g",0),
-//                needData("청양고추","40g",0),
-//                needData("설탕","5g",0),
-//                needData("애호박","100g",0),
-//                needData("감자","50g",0),
-//            ),0,0,0))
-//            add(RecipeData("명란계란찜", arrayListOf(
-//                needData("명란젓","50g",0),
-//                needData("파","30g",0),
-//                needData("계란","3",0),
-//                needData("소금","5",0)
-//            ),0,0,0))
-//            add(RecipeData("어묵탕", arrayListOf(
-//                needData("어묵","100g",0),
-//                needData("무","100g",0),
-//                needData("양파","100g",0),
-//                needData("소금","5g",0),
-//                needData("후추","5g",0),
-//                needData("마늘","20g",0),
-//                needData("청양고추","20g",0)
-//            ),0,0,0))
-//            add(RecipeData("오징어볶음", arrayListOf(
-//                needData("오징어","600g",0),
-//                needData("양배추","100g",0),
-//                needData("당근","200g",0),
-//                needData("양파","150g",0),
-//                needData("파","100g",0),
-//                needData("마늘","20g",0),
-//                needData("청양고추","20g",0),
-//                needData("설탕","10g",0)
-//            ),0,0,0))
-//            add(RecipeData("닭가슴살전", arrayListOf(
-//                needData("닭가슴살","50g",0),
-//                needData("양파","100g",0),
-//                needData("소금","5g",0),
-//                needData("달걀","3",0),
-//                needData("파","20g",0)
-//            ),0,0,0))
-//            add(RecipeData("미역국", arrayListOf(
-//                needData("미역","20g",0),
-//                needData("소고기","100g",0),
-//                needData("소금","5g",0),
-//                needData("마늘","20g",0)
-//            ),0,0,0))
-//            add(RecipeData("두부김치", arrayListOf(
-//                needData("두부","100g",0),
-//                needData("김치","100g",0),
-//                needData("돼지고기","250g",0),
-//                needData("양파","100g",0),
-//                needData("당근","20g",0),
-//                needData("대파","20g",0),
-//                needData("청양고추","20g",0),
-//                needData("마늘","10g",0)
-//            ),0,0,0))
-//            add(RecipeData("부추계란말이", arrayListOf(
-//                needData("부추","100g",0),
-//                needData("계란","4",0),
-//                needData("소금","5g",0)
-//            ),0,0,0))
-//            add(RecipeData("수육", arrayListOf(
-//                needData("돼지고기","600g",0),
-//                needData("마늘","50g",0),
-//                needData("된장","100g",0),
-//                needData("후추","100g",0)
-//            ),0,0,0))
-//            add(RecipeData("부대찌개", arrayListOf(
-//                needData("돼지고기","200g",0),
-//                needData("마늘","100g",0),
-//                needData("김치","50g",0),
-//                needData("양파","50g",0),
-//                needData("후추","50g",0),
-//                needData("대파","20g",0),
-//                needData("소시지","50g",0)
-//            ),0,0,0))
-//            add(RecipeData("돼지고기숙주볶음", arrayListOf(
-//                needData("돼지고기","180g",0),
-//                needData("숙주","210g",0),
-//                needData("대파","50g",0),
-//                needData("마늘","50g",0)
-//            ),0,0,0))
-//        }
+        recipeList.apply{
+            add(RecipeData("김치찌개", arrayListOf(
+                needData("김치","300g",0),
+                needData("돼지고기","100g",0),
+                needData("대파","30g",0),
+                needData("마늘","20g",0)
+            ),0,0,0))
+            add(RecipeData("된장찌개", arrayListOf(
+                needData("된장","300g",0),
+                needData("양파","300g",0),
+                needData("소금","5g",0),
+                needData("마늘","20g",0),
+                needData("청양고추","40g",0),
+                needData("설탕","5g",0),
+                needData("애호박","100g",0),
+                needData("감자","50g",0),
+            ),0,0,0))
+            add(RecipeData("명란계란찜", arrayListOf(
+                needData("명란젓","50g",0),
+                needData("파","30g",0),
+                needData("계란","3",0),
+                needData("소금","5",0)
+            ),0,0,0))
+            add(RecipeData("어묵탕", arrayListOf(
+                needData("어묵","100g",0),
+                needData("무","100g",0),
+                needData("양파","100g",0),
+                needData("소금","5g",0),
+                needData("후추","5g",0),
+                needData("마늘","20g",0),
+                needData("청양고추","20g",0)
+            ),0,0,0))
+            add(RecipeData("오징어볶음", arrayListOf(
+                needData("오징어","600g",0),
+                needData("양배추","100g",0),
+                needData("당근","200g",0),
+                needData("양파","150g",0),
+                needData("파","100g",0),
+                needData("마늘","20g",0),
+                needData("청양고추","20g",0),
+                needData("설탕","10g",0)
+            ),0,0,0))
+            add(RecipeData("닭가슴살전", arrayListOf(
+                needData("닭가슴살","50g",0),
+                needData("양파","100g",0),
+                needData("소금","5g",0),
+                needData("달걀","3",0),
+                needData("파","20g",0)
+            ),0,0,0))
+            add(RecipeData("미역국", arrayListOf(
+                needData("미역","20g",0),
+                needData("소고기","100g",0),
+                needData("소금","5g",0),
+                needData("마늘","20g",0)
+            ),0,0,0))
+            add(RecipeData("두부김치", arrayListOf(
+                needData("두부","100g",0),
+                needData("김치","100g",0),
+                needData("돼지고기","250g",0),
+                needData("양파","100g",0),
+                needData("당근","20g",0),
+                needData("대파","20g",0),
+                needData("청양고추","20g",0),
+                needData("마늘","10g",0)
+            ),0,0,0))
+            add(RecipeData("부추계란말이", arrayListOf(
+                needData("부추","100g",0),
+                needData("계란","4",0),
+                needData("소금","5g",0)
+            ),0,0,0))
+            add(RecipeData("수육", arrayListOf(
+                needData("돼지고기","600g",0),
+                needData("마늘","50g",0),
+                needData("된장","100g",0),
+                needData("후추","100g",0)
+            ),0,0,0))
+            add(RecipeData("부대찌개", arrayListOf(
+                needData("돼지고기","200g",0),
+                needData("마늘","100g",0),
+                needData("김치","50g",0),
+                needData("양파","50g",0),
+                needData("후추","50g",0),
+                needData("대파","20g",0),
+                needData("소시지","50g",0)
+            ),0,0,0))
+            add(RecipeData("돼지고기숙주볶음", arrayListOf(
+                needData("돼지고기","180g",0),
+                needData("숙주","210g",0),
+                needData("대파","50g",0),
+                needData("마늘","50g",0)
+            ),0,0,0))
+        }
 
         var firestore: FirebaseFirestore? = null
         var uid: String? = null
@@ -155,6 +152,12 @@ class Tab2Fragment: Fragment() {
 //        for(i in 0 until recipeList.size) {
 //            firestore.collection("recipes").document(i.toString()).set(recipeList[i])
 //        }
+
+        recipeList.sortBy { it.name }
+        for(i in 0 until recipeList.size){
+            firestore!!.collection("recipes").document(i.toString())
+                .set(recipeList[i])
+        }
 
             firestore?.collection("recipes")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                 // ArrayList 비워줌
@@ -189,7 +192,17 @@ class Tab2Fragment: Fragment() {
                 }
 
                 adapter.notifyItemChanged(position)
-            }override fun onLongClick(position: Int){
+            }override fun onLongClick(position: Int) {
+                recipes.removeAt(position)
+                firestore!!.collection("recipes").document(position.toString())
+                    .delete()
+                for (i in 0 until recipes.size) {
+                    firestore!!.collection("recipes").document(i.toString())
+                        .set(recipes[i])
+                }
+                firestore!!.collection("recipes").document(recipes.size.toString())
+                    .delete()
+                adapter.notifyDataSetChanged()
 
             }
         })

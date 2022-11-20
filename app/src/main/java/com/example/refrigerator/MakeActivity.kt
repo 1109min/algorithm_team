@@ -2,11 +2,13 @@ package com.example.refrigerator
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.renderscript.ScriptGroup.Binding
+import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -16,6 +18,7 @@ import com.example.refrigerator.databinding.ActivityMainBinding
 import com.example.refrigerator.databinding.ActivityMakeBinding
 import com.google.android.material.snackbar.BaseTransientBottomBar.AnimationMode
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.local.LruGarbageCollector.Results
 import org.checkerframework.checker.index.qual.GTENegativeOne
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
@@ -38,6 +41,8 @@ class MakeActivity : AppCompatActivity() {
 
     var firestore: FirebaseFirestore? = null
 
+    var result_menu : ResultData = ResultData()
+    var base_recipe : RecipeData = RecipeData()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,8 +123,10 @@ class MakeActivity : AppCompatActivity() {
         }.start()
 
         //재료 읽어오기
+        var in_check : Boolean = false
         firestore = FirebaseFirestore.getInstance()
         var origin_ingredients : ArrayList<IngredientData> = arrayListOf()
+
         firestore?.collection("ingredient")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
             // ArrayList 비워줌
             origin_ingredients.clear()
@@ -127,10 +134,11 @@ class MakeActivity : AppCompatActivity() {
                 var item = snapshot.toObject(IngredientData::class.java)
                 origin_ingredients.add(item!!)
             }
+            Log.d("aaddd",origin_ingredients.size.toString())
+            in_check = true
         }
 
         //메뉴 읽어오기
-        firestore = FirebaseFirestore.getInstance()
         var origin_recipes : ArrayList<RecipeData> = arrayListOf()
         firestore?.collection("recipes")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
             // ArrayList 비워줌
@@ -139,13 +147,15 @@ class MakeActivity : AppCompatActivity() {
                 var item = snapshot.toObject(RecipeData::class.java)
                 origin_recipes.add(item!!)
             }
+            Log.d("aa",origin_recipes.size.toString())
         }
+
+
 
         //알고리즘 구동
 
-        var result_menu : ResultData = ResultData()
-        var base_recipe : RecipeData = RecipeData()
-
+//        var result_menu : ResultData = ResultData()
+//        var base_recipe : RecipeData = RecipeData()
 
 
 
@@ -169,32 +179,96 @@ class MakeActivity : AppCompatActivity() {
         result_menu.date = currentdate
         result_menu.star = 0
 
+        //예시
+        result_menu = ResultData("크리스마스", arrayListOf(needData("스윙스","0",0)),currentdate,0,0)
 
 
-        //알고리즘 구동 후
-        //읽어오기
-        var ResultList : java.util.ArrayList<ResultData> = arrayListOf()
 
-        firestore?.collection("results")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-            // ArrayList 비워줌
-            ResultList.clear()
+        binding.menuName.text = result_menu.name
 
-            for (snapshot in querySnapshot!!.documents) {
-                var item = snapshot.toObject(ResultData::class.java)
-                ResultList.add(item!!)
+        var info:String = ""
+        for(i in 0 until result_menu.ingredients.size-1) {
+
+            var new_info =
+                result_menu.ingredients[i].name + " : " + result_menu.ingredients[i].amount
+
+
+            if(i%2==0){
+                new_info += "\n"
+            }else{
+                new_info += "   "
             }
+            info += new_info
         }
+        var new_info =
+            result_menu.ingredients[result_menu.ingredients.size-1].name + " : " + result_menu.ingredients[result_menu.ingredients.size-1].amount
 
-    // 쓰기
-        //      ResultList.add(result_menu)
-//            firestore!!.collection("results").document(ResultList.size.toString())
-//                .set(ResultList[i])
-//            Log.d("wow",ResultList.size.toString()+" "+ResultList[i].toString()+"kjkjk "+i)
+        info += new_info
+        binding.menuIngredient.text = info
+        //뷰에 표시
+
+
+//        //메뉴 읽어오기
+//        var origin_recipes : ArrayList<RecipeData> = arrayListOf()
+//        firestore?.collection("recipes")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+//            // ArrayList 비워줌
+//            origin_recipes.clear()
+//            for (snapshot in querySnapshot!!.documents) {
+//                var item = snapshot.toObject(RecipeData::class.java)
+//                origin_recipes.add(item!!)
+//            }
+//            Log.d("aa",origin_recipes.size.toString())
 //        }
 
 
+//        //읽어오기
+   var ResultList : ArrayList<ResultData> = arrayListOf()
+//        var check : Int = 0
+//        firestore = FirebaseFirestore.getInstance()
+//        firestore?.collection("results")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+//            // ArrayList 비워줌
+//            ResultList.clear()
+//
+//            for (snapshot in querySnapshot!!.documents) {
+//                var item = snapshot.toObject(ResultData::class.java)
+//                ResultList.add(item!!)
+//            }
+//            check = 1
+//        }
+//        Log.d("eedds",ResultList.size.toString())
 
-    }
+
+//        val handler2 = Handler(mainLooper)
+//
+//        Thread(){
+//            while(check == 1){
+//                handler2.post{
+//                    firestore!!.collection("results").document(ResultList.size.toString())
+//                        .set(result_menu)
+//                    Log.d("eedd",ResultList.size.toString())
+//                    check = 0
+//                }
+//            }
+//        }.start()
+
+        Log.d("eedd6",ResultList.size.toString())
+
+
+     //쓰기
+              ResultList.add(result_menu)
+
+
+
+        firestore!!.collection("currents").document("0").set(result_menu)
+
+        Log.d("eeddd",ResultList.size.toString())
+
+    } //create 끝
 
     //메소드 칸
+
 }
+
+
+
+

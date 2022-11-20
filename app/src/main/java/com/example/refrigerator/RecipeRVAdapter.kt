@@ -163,6 +163,8 @@ class RecipeRVAdapter(private val dataList: ArrayList<RecipeData>): RecyclerView
         dataList.removeAt(from_position)
         dataList.add(to_position, name)
 
+
+
         // fromPosition에서 toPosition으로 아이템 이동 공지
         notifyItemMoved(from_position, to_position)
         return true

@@ -68,13 +68,14 @@ class Add1Activity : AppCompatActivity() {
         binding.menuAddBtn.setOnClickListener {
 
             menudata.add(0,RecipeData(binding.menuNameET.text.toString(),dataList,0,0,0))
+            origin_recipes.add(menudata[0])
 
-            firestore!!.collection("recipes").document(origin_recipes.size.toString()).set(menudata[0])
+            origin_recipes.sortBy { it.name }
+            for(i in 0 until origin_recipes.size) {
+                firestore!!.collection("recipes").document(i.toString())
+                    .set(origin_recipes[i])
+            }
 
-
-
-            intent.putExtra("menu",menudata)
-            intent.putExtra("menu_check","1")
 
             setResult(RESULT_OK, intent)
             finish()

@@ -74,6 +74,12 @@ class Tab1Fragment: Fragment() {
         fab_open = AnimationUtils.loadAnimation(this.activity, R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(this.activity, R.anim.fab_close);
 
+        //firebase 연동
+        var firestore: FirebaseFirestore? = null
+        var uid: String? = null
+        uid = FirebaseAuth.getInstance().currentUser?.uid
+
+        firestore = FirebaseFirestore.getInstance()
 
         //각 아이템을 클릭했을 때
         adapter.setMyItemClickListener(object : IngredientRVAdapter.OnItemClickListener {
@@ -97,7 +103,17 @@ class Tab1Fragment: Fragment() {
                         0 -> binding.dateItem.setBackgroundResource(R.drawable.date_safe)
                     }
 
-            }override fun onLongClick(position: Int){
+            }override fun onLongClick(position: Int) {
+                ingredientList.removeAt(position)
+                firestore!!.collection("ingredient").document(position.toString())
+                    .delete()
+                for (i in 0 until ingredientList.size) {
+                    firestore!!.collection("ingredient").document(i.toString())
+                        .set(ingredientList[i])
+                }
+                firestore!!.collection("ingredient").document(ingredientList.size.toString())
+                    .delete()
+                adapter.notifyDataSetChanged()
 
             }
         })
@@ -112,13 +128,6 @@ class Tab1Fragment: Fragment() {
             binding.clickItem.visibility = GONE
         }
 
-        //firebase 연동
-        var firestore: FirebaseFirestore? = null
-        var uid: String? = null
-        uid = FirebaseAuth.getInstance().currentUser?.uid
-        val format = SimpleDateFormat("yyyy-MM-dd")
-
-        firestore = FirebaseFirestore.getInstance()
 
 
 

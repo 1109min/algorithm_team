@@ -100,8 +100,8 @@ class MainActivity : AppCompatActivity() {
         fab_open = AnimationUtils.loadAnimation(mContext, R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(mContext, R.anim.fab_close);
         fab_main = viewBinding.mainBtn
-        fab_sub1 = viewBinding.ingredientPlusBtn
-        fab_sub2 = viewBinding.recipePlusBtn
+        fab_sub1 = viewBinding.recommandBtn
+        fab_sub2 = viewBinding.plussBtn
 
         fadeInAnim = AnimationUtils.loadAnimation(this, R.anim.fade_in)
         fadeOutAnim = AnimationUtils.loadAnimation(this, R.anim.fade_out)
@@ -113,16 +113,27 @@ class MainActivity : AppCompatActivity() {
         }
         val intent = Intent(this, Add1Activity::class.java)
         val intent2 = Intent(this, Add2Activity::class.java)
+        val intentmake = Intent(this, MakeActivity::class.java)
         intent2.putExtra("test","test2")
         //메뉴추가하러가기
         fab_sub1!!.setOnClickListener{
-            resultLauncher.launch(intent)
+            resultLauncher.launch(intentmake)
         }
 
         fab_sub2!!.setOnClickListener {
-            resultLauncher.launch(intent2)
 
         }
+        viewBinding.menuMake.setOnClickListener{
+            resultLauncher.launch(intentmake)
+        }
+
+        viewBinding.recipePlus.setOnClickListener {
+            resultLauncher.launch(intent)
+        }
+        viewBinding.ingredientPlus.setOnClickListener{
+            resultLauncher.launch(intent2)
+        }
+
         viewBinding.btnBackLayout.setOnClickListener {
             toggleFab()
             viewBinding.btnBackLayout.visibility = GONE
@@ -159,6 +170,7 @@ class MainActivity : AppCompatActivity() {
                 ingredients.add(item!!)
             }
         }
+
 
 
 
