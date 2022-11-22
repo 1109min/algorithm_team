@@ -74,6 +74,12 @@ class Tab1Fragment: Fragment() {
         fab_open = AnimationUtils.loadAnimation(this.activity, R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(this.activity, R.anim.fab_close);
 
+        //firebase 연동
+        var firestore: FirebaseFirestore? = null
+        var uid: String? = null
+        uid = FirebaseAuth.getInstance().currentUser?.uid
+
+        firestore = FirebaseFirestore.getInstance()
 
         //각 아이템을 클릭했을 때
         adapter.setMyItemClickListener(object : IngredientRVAdapter.OnItemClickListener {
@@ -97,7 +103,17 @@ class Tab1Fragment: Fragment() {
                         0 -> binding.dateItem.setBackgroundResource(R.drawable.date_safe)
                     }
 
-            }override fun onLongClick(position: Int){
+            }override fun onLongClick(position: Int) {
+                ingredientList.removeAt(position)
+                firestore!!.collection("ingredient").document(position.toString())
+                    .delete()
+                for (i in 0 until ingredientList.size) {
+                    firestore!!.collection("ingredient").document(i.toString())
+                        .set(ingredientList[i])
+                }
+                firestore!!.collection("ingredient").document(ingredientList.size.toString())
+                    .delete()
+                adapter.notifyDataSetChanged()
 
             }
         })
@@ -112,85 +128,95 @@ class Tab1Fragment: Fragment() {
             binding.clickItem.visibility = GONE
         }
 
-        //firebase 연동
-        var firestore: FirebaseFirestore? = null
-        var uid: String? = null
-        uid = FirebaseAuth.getInstance().currentUser?.uid
-        val format = SimpleDateFormat("yyyy-MM-dd")
 
 
-        firestore = FirebaseFirestore.getInstance();
-        firestore.collection("sourcefile").document("ingredients")
-            .addSnapshotListener { value, error ->
-                Log.d("event", value.toString())
-                arrayList.clear()
-                arrayList.addAll((value?.data?.get("ingredient") as ArrayList<*>))
 
-                //배열에 저장
-                for (i in 0 until arrayList.size) {
-                    try {
-                        if (i % 3 == 0){
-                            ingredientName.add(arrayList[i] as String)
-                        }
-                        else if (i % 3 == 1) {
-                            ingredientTime.add(format.format(toTimeStamp(arrayList[i].toString())))
-                        }
-                        else if (i % 3 == 2){
-                            ingredientAmount.add(arrayList[i] as String)
-                        }
+//        firestore?.collection("recipes")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+//            // ArrayList 비워줌
+//            ingredientList.clear()
+//
+//            for (snapshot in querySnapshot!!.documents) {
+//                var item = snapshot.toObject(IngredientData::class.java)
+//                ingredientList.add(item!!)
+//            }
+//            adapter.notifyDataSetChanged()
+//        }
 
-                    } catch (e: Exception) {
-                        Log.d("error:$i", e.toString())
-                    }
 
-                }
+//        firestore = FirebaseFirestore.getInstance();
+//        firestore.collection("sourcefile").document("ingredients")
+//            .addSnapshotListener { value, error ->
+//                Log.d("event", value.toString())
+//                arrayList.clear()
+//                arrayList.addAll((value?.data?.get("ingredient") as ArrayList<*>))
+//
+//                //배열에 저장
+//                for (i in 0 until arrayList.size) {
+//                    try {
+//                        if (i % 3 == 0){
+//                            ingredientName.add(arrayList[i] as String)
+//                        }
+//                        else if (i % 3 == 1) {
+//                            ingredientTime.add(format.format(toTimeStamp(arrayList[i].toString())))
+//                        }
+//                        else if (i % 3 == 2){
+//                            ingredientAmount.add(arrayList[i] as String)
+//                        }
+//
+//                    } catch (e: Exception) {
+//                        Log.d("error:$i", e.toString())
+//                    }
+//
+//                }
+//
+//                for (i in 0 until ingredientName.size) {
+//
+//                    //사진 예시 용
+//                    var pic:Int = 0
+//                    when(Random().nextInt(9)){
+//                        0 -> pic = R.drawable.pic1_barbecue
+//                        1 -> pic = R.drawable.pic2_dairy_products
+//                        2 -> pic =(R.drawable.pic3_fruit)
+//                        3 -> pic =(R.drawable.pic4_harvest)
+//                        4 -> pic =(R.drawable.pic5_kimchi)
+//                        5 -> pic =(R.drawable.pic6_vegetable)
+//                        6 -> pic =(R.drawable.pic7_wine)
+//                        8 -> pic =(R.drawable.pic8_seafood)
+//                        else -> pic =(R.drawable.pic1_barbecue)
+//                    }
+//
+//                    ingredientList.add(
+//                        IngredientData(
+//                            ingredientName[i],
+//                            ingredientAmount[i],
+//                            ingredientTime[i],
+//                            pic,
+//                            0
+//                        )
+//                    )
+//                }
+//                //남은 날짜 이른 순으로 정렬
 
-                for (i in 0 until ingredientName.size) {
+//                adapter.notifyDataSetChanged()
+//            }
 
-                    //사진 예시 용
-                    var pic:Int = 0
-                    when(Random().nextInt(9)){
-                        0 -> pic = R.drawable.pic1_barbecue
-                        1 -> pic = R.drawable.pic2_dairy_products
-                        2 -> pic =(R.drawable.pic3_fruit)
-                        3 -> pic =(R.drawable.pic4_harvest)
-                        4 -> pic =(R.drawable.pic5_kimchi)
-                        5 -> pic =(R.drawable.pic6_vegetable)
-                        6 -> pic =(R.drawable.pic7_wine)
-                        8 -> pic =(R.drawable.pic8_seafood)
-                        else -> pic =(R.drawable.pic1_barbecue)
-                    }
+        firestore?.collection("ingredient")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+            // ArrayList 비워줌
+            ingredientList.clear()
 
-                    ingredientList.add(
-                        IngredientData(
-                            ingredientName[i],
-                            ingredientAmount[i],
-                            ingredientTime[i],
-                            pic,
-                            0
-                        )
-                    )
-                }
-                //남은 날짜 이른 순으로 정렬
+            for (snapshot in querySnapshot!!.documents) {
+                var item = snapshot.toObject(IngredientData::class.java)
+                ingredientList.add(item!!)
+            }
                 var byYear = Comparator.comparing { obj: IngredientData -> obj.dateString.split("-")[0]}
                 var byMonth = Comparator.comparing { obj: IngredientData -> obj.dateString.split("-")[1]}
                 var byday = Comparator.comparing { obj: IngredientData -> obj.dateString.split("-")[2]}
                 ingredientList.sortWith(byYear.thenComparing(byMonth.thenComparing(byday)))
-
-                adapter.notifyDataSetChanged()
-            }
-
-
-        adapter.notifyDataSetChanged()
+//
+            adapter.notifyDataSetChanged()
+        }
 
 
-        //아이템 스와이프
-        val itemTouchHelperCallback = ItemTouchHelperCallback(adapter)
-
-        // ItemTouchHelper의 생성자로 ItemTouchHelper.Callback 객체 셋팅
-        val helper = ItemTouchHelper(itemTouchHelperCallback)
-        // RecyclerView에 ItemTouchHelper 연결
-        //helper.attachToRecyclerView(binding.tab1RV)
 
         return binding.root
     }

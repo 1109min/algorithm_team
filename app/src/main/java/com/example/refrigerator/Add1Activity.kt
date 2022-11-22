@@ -3,10 +3,12 @@ package com.example.refrigerator
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.refrigerator.databinding.ActivityAdd1Binding
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlin.collections.ArrayList
 
 class Add1Activity : AppCompatActivity() {
@@ -15,6 +17,7 @@ class Add1Activity : AppCompatActivity() {
         ActivityAdd1Binding.inflate(layoutInflater)
     }
     val dataList: ArrayList<needData> = arrayListOf()
+    var firestore: FirebaseFirestore? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,11 +54,31 @@ class Add1Activity : AppCompatActivity() {
         var inname = binding.ingredientNameET
         var inamount = binding.ingredientAmountET
 
+        firestore = FirebaseFirestore.getInstance()
+        var origin_recipes : ArrayList<RecipeData> = arrayListOf()
+        firestore?.collection("recipes")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+            // ArrayList 비워줌
+            origin_recipes.clear()
+
+            for (snapshot in querySnapshot!!.documents) {
+                var item = snapshot.toObject(RecipeData::class.java)
+                origin_recipes.add(item!!)
+            }
+        }
+
         binding.menuAddBtn.setOnClickListener {
 
             menudata.add(0,RecipeData(binding.menuNameET.text.toString(),dataList,0,0,0))
+            origin_recipes.add(menudata[0])
 
-            intent.putExtra("menu",menudata)
+            origin_recipes.sortBy { it.name }
+            for(i in 0 until origin_recipes.size) {
+                firestore!!.collection("recipes").document(i.toString())
+                    .set(origin_recipes[i])
+                Log.d("why",i.toString())
+            }
+
+
             setResult(RESULT_OK, intent)
             finish()
         }

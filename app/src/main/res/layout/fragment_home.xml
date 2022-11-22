@@ -41,6 +41,7 @@
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             tools:listitem="@layout/result_item_layout"
+            android:layoutAnimation="@anim/anim_slide"
             app:layout_constraintTop_toBottomOf="@id/top_btn"
             app:layout_constraintBottom_toTopOf="@id/make_btn"
             >
@@ -49,7 +50,6 @@
             android:id="@+id/click_item"
             android:layout_width="270dp"
             android:layout_height="wrap_content"
-            android:visibility="gone"
 
             android:background="@drawable/background_layout"
             android:backgroundTint="@color/white"
@@ -168,15 +168,19 @@
                 android:id="@+id/ingreds_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginBottom="13dp"
+                android:padding="15dp"
                 android:background="@drawable/top_border"
                 android:fontFamily="@font/jua"
+
+                android:lineSpacingMultiplier="1.7"
+                android:textAlignment="center"
 
                 android:gravity="center_horizontal"
                 android:paddingTop="15dp"
                 android:text="김치..."
-                android:textSize="18sp"
+                android:textSize="15sp"
 
                 android:textStyle="normal"
                 app:layout_constraintBottom_toBottomOf="parent"

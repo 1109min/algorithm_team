@@ -43,7 +43,7 @@
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/ingredient_plus_btn"
+        android:id="@+id/recommand_btn"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginEnd="15dp"
@@ -51,29 +51,84 @@
         android:backgroundTint="@color/white"
         android:padding="0dp"
         android:visibility="invisible"
+
         android:background="@drawable/background_layout"
         app:layout_constraintBottom_toTopOf="@id/main_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:rippleColor="@color/white">
+        <TextView
+            android:id="@+id/menu_make"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background_layout"
+            android:backgroundTint="@color/white"
+            android:text="메뉴 추천 받기"
+            android:textColor="@color/wgrey"
+            android:textSize="18sp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:fontFamily="@font/jua"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
 
+        </TextView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/recipe_plus_btn"
+        android:id="@+id/pluss_btn"
         android:layout_width="150dp"
         android:layout_height="200dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:backgroundTint="@color/white"
-        android:padding="0dp"
-        android:visibility="invisible"
+        android:padding="10dp"
         android:background="@drawable/background_layout"
-
-        app:layout_constraintBottom_toTopOf="@id/ingredient_plus_btn"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@id/recommand_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/ingredient_plus_btn"
+        app:layout_constraintStart_toStartOf="@+id/recommand_btn"
         app:rippleColor="@color/white">
+        <TextView
+            android:id="@+id/recipe_plus"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="5dp"
 
+            android:background="@drawable/background_layout"
+            android:backgroundTint="@color/grey"
+            android:text="메뉴\n추가"
+            android:textColor="@color/wgrey"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:fontFamily="@font/jua"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/ingredient_plus"
+            ></TextView>
+        <TextView
+            android:id="@+id/ingredient_plus"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/background_layout"
+            android:backgroundTint="@color/grey"
+            android:text="재료\n추가"
+            android:textColor="@color/wgrey"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:fontFamily="@font/jua"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recipe_plus"
+            app:layout_constraintBottom_toBottomOf="parent"
+            ></TextView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

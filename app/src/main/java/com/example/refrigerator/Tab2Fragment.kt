@@ -22,6 +22,7 @@ import com.example.refrigerator.databinding.RecipeItemLayoutBinding
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -36,6 +37,7 @@ class Tab2Fragment: Fragment() {
     var ingredientAmount: java.util.ArrayList<String> = java.util.ArrayList()
     var ingredientTime: java.util.ArrayList<String> = java.util.ArrayList()
     var arrayList: java.util.ArrayList<Any> = java.util.ArrayList()
+    var recipes: ArrayList<RecipeData> = arrayListOf()
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
@@ -46,10 +48,7 @@ class Tab2Fragment: Fragment() {
     ): View? {
         binding = FragmentTab2Binding.inflate(inflater, container, false)
 
-        //room db
-        val act = requireActivity().application
-//        val roomDb = AppDatabase.getInstance(act)
-        var recipes: ArrayList<RecipeData> = arrayListOf()
+
         recipeList.apply{
             add(RecipeData("김치찌개", arrayListOf(
                 needData("김치","300g",0),
@@ -146,33 +145,36 @@ class Tab2Fragment: Fragment() {
         var firestore: FirebaseFirestore? = null
         var uid: String? = null
         uid = FirebaseAuth.getInstance().currentUser?.uid
-        firestore = FirebaseFirestore.getInstance();
-        var city = hashMapOf(
-            "name" to "Los Angeles",
-            "state" to "CA",
-            "country" to "USA"
-        )
-        firestore.collection("sourcefile").document("aa").set(city)
-            .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
-            .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
+        firestore = FirebaseFirestore.getInstance()
 
-//        //제발 해주세요
-//        if(roomDb != null) {
-//            for (i in 0 until recipeList.size) {
-//                roomDb.recipeDao().insert(recipeList[i])
-//            }
-//
-//            recipes = roomDb.recipeDao().selectAll().toTypedArray().toCollection(ArrayList<RecipeData>())
+        val adapter = RecipeRVAdapter(recipes)
+
+//        for(i in 0 until recipeList.size) {
+//            firestore.collection("recipes").document(i.toString()).set(recipeList[i])
 //        }
 
+        recipeList.sortBy { it.name }
+        for(i in 0 until recipeList.size){
+            firestore!!.collection("recipes").document(i.toString())
+                .set(recipeList[i])
+        }
 
+            firestore?.collection("recipes")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                // ArrayList 비워줌
+                recipes.clear()
 
-
+                for (snapshot in querySnapshot!!.documents) {
+                    var item = snapshot.toObject(RecipeData::class.java)
+                    recipes.add(item!!)
+                }
+                recipes.sortBy { it.name }
+                adapter.notifyDataSetChanged()
+            }
 
         binding.tab2RV.layoutManager = LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false)
 
-        val adapter = RecipeRVAdapter(recipeList)
 
+        Log.d("Dd",recipes.size.toString())
         //binding.mainFeed.adapter = Postadapter
         binding.tab2RV.adapter = adapter
 
@@ -182,72 +184,32 @@ class Tab2Fragment: Fragment() {
         //각 아이템을 클릭했을 때
         adapter.setMyItemClickListener(object : RecipeRVAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
-                if(recipeList[position].state == 0) {
-                    recipeList[position].click = 1
-                    recipeList[position].state = 1
-                }else if (recipeList[position].state ==1){
-                    recipeList[position].click = 1
-                    recipeList[position].state = 0
+                if(recipes[position].state == 0) {
+                    recipes[position].click = 1
+                    recipes[position].state = 1
+                }else if (recipes[position].state ==1){
+                    recipes[position].click = 1
+                    recipes[position].state = 0
                 }
 
                 adapter.notifyItemChanged(position)
-            }override fun onLongClick(position: Int){
+            }override fun onLongClick(position: Int) {
+                recipes.removeAt(position)
+
+                recipes.sortBy { it.name }
+
+                firestore!!.collection("recipes").document(position.toString())
+                    .delete()
+                for (i in 0 until recipes.size) {
+                    firestore!!.collection("recipes").document(i.toString())
+                        .set(recipes[i])
+                }
+                firestore!!.collection("recipes").document(recipes.size.toString())
+                    .delete()
+                adapter.notifyDataSetChanged()
 
             }
         })
-
-
-        adapter.notifyDataSetChanged()
-//firebase 연동
-//        var firestore: FirebaseFirestore? = null
-//        var uid: String? = null
-//        uid = FirebaseAuth.getInstance().currentUser?.uid
-//        val format = SimpleDateFormat("yyyy-MM-dd")
-//
-//
-//        firestore = FirebaseFirestore.getInstance();
-//        firestore.collection("sourcefile").document("ingredients")
-//            .addSnapshotListener { value, error ->
-//                Log.d("event", value.toString())
-//                arrayList.clear()
-//                arrayList.addAll((value?.data?.get("ingredient") as java.util.ArrayList<*>))
-//
-//                //배열에 저장
-//                for (i in 0 until arrayList.size) {
-//                    try {
-//                        if (i % 3 == 0){
-//                            ingredientName.add(arrayList[i] as String)
-//                        }
-//                        else if (i % 3 == 1) {
-//                            ingredientTime.add(format.format(toTimeStamp(arrayList[i].toString())))
-//                        }
-//                        else if (i % 3 == 2){
-//                            ingredientAmount.add(arrayList[i] as String)
-//                        }
-//
-//                    } catch (e: Exception) {
-//                        Log.d("error:$i", e.toString())
-//                    }
-//
-//                }
-//
-//                for (i in 0 until ingredientName.size) {
-//
-//                    ingredientList.add(
-//                        IngredientData(
-//                            ingredientName[i],
-//                            ingredientAmount[i],
-//                            ingredientTime[i]
-//                        )
-//                    )
-//                }
-//                var byYear = Comparator.comparing { obj: IngredientData -> obj.dateString.split("-")[0]}
-//                var byMonth = Comparator.comparing { obj: IngredientData -> obj.dateString.split("-")[1]}
-//                var byday = Comparator.comparing { obj: IngredientData -> obj.dateString.split("-")[2]}
-//                ingredientList.sortWith(byYear.thenComparing(byMonth.thenComparing(byday)))
-//
-//                adapter.notifyDataSetChanged()
-//            }
 
 
         adapter.notifyDataSetChanged()

@@ -68,6 +68,7 @@ class ResultRVAdapter(private val dataList: ArrayList<ResultData>): RecyclerView
             val diffDays = diffSec / (24 * 60 * 60) //일자수 차이
 
             when (diffDays.toInt()){
+                0 -> viewBinding.foodDate.text = "오늘"
                 1 -> viewBinding.foodDate.text = "어제"
                 2 -> viewBinding.foodDate.text = "그저께"
                 7 -> viewBinding.foodDate.text = "일주일 전"
