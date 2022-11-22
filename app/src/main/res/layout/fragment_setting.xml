@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SettingFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -12,10 +13,71 @@
         android:layout_height="match_parent"
         android:background="@drawable/background_layout"
         android:layout_marginTop="15dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="10dp"
         android:layout_marginBottom="15dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sett_RV"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/write"
+            >
+        </androidx.recyclerview.widget.RecyclerView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/write"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sett_RV">
+            <EditText
+                android:id="@+id/write_Ed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/jua"
+                android:background="@drawable/background_layout"
+                android:backgroundTint="@color/grey"
+                android:paddingStart="13dp"
+                android:paddingEnd="13dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:hint="채팅내용을 입력하세요"
+                android:textColorHint="@color/wgrey"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/chat_btn"
+                app:layout_constraintTop_toTopOf="parent">
+            </EditText>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/chat_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:padding="5dp"
+                android:text="보내기"
+                android:textSize="16sp"
+                android:layout_marginStart="15dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/jua"
+                android:background="@drawable/background_layout"
+                android:backgroundTint="@color/blue"
+                app:layout_constraintStart_toEndOf="@id/write_Ed"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
+            </androidx.appcompat.widget.AppCompatButton>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 

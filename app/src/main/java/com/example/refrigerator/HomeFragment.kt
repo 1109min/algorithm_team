@@ -265,7 +265,9 @@ class HomeFragment : Fragment() {
         var byYear = Comparator.comparing { obj: ResultData -> obj.date.split("-")[0] }
         var byMonth = Comparator.comparing { obj: ResultData -> obj.date.split("-")[1] }
         var byday = Comparator.comparing { obj: ResultData -> obj.date.split("-")[2] }
-        ResultList.sortWith(byYear.thenComparing(byMonth.thenComparing(byday)))
+        var byname = Comparator.comparing { obj: ResultData -> obj.name }
+
+        ResultList.sortWith(byYear.thenComparing(byMonth.thenComparing(byday.thenComparing(byname))))
         ResultList.reverse()
 
         //쓰기

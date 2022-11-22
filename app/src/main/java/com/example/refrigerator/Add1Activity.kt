@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +21,8 @@ class Add1Activity : AppCompatActivity() {
     val dataList: ArrayList<needData> = arrayListOf()
     var firestore: FirebaseFirestore? = null
 
+    private var fab_open: Animation? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +30,12 @@ class Add1Activity : AppCompatActivity() {
         binding.addRv.layoutManager = LinearLayoutManager(this,
             RecyclerView.VERTICAL,false)
 
+        val anim = AnimationUtils.loadLayoutAnimation(this, R.anim.anim_slide)
+        binding.addRv.layoutAnimation = anim
+        binding.addRv.scheduleLayoutAnimation()
+
         val adapter = AddMenuRVAdapter(dataList)
+
         val itemTouchHelperCallback = ItemTouchHelperCallback(adapter)
 
         // ItemTouchHelper의 생성자로 ItemTouchHelper.Callback 객체 셋팅
@@ -86,9 +95,11 @@ class Add1Activity : AppCompatActivity() {
             if (inname.equals("") || inamount.equals("")) {
 
             } else {
+                var real_amount = inamount.text.toString().split("g")[0]
+
                 dataList.add(
                     dataList.size,
-                    needData(inname.text.toString(), inamount.text.toString(), 0)
+                    needData(inname.text.toString(), real_amount, 0)
                 )
                 inname.setText("")
                 inamount.setText("")

@@ -1,6 +1,7 @@
 package com.example.refrigerator
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
@@ -21,6 +22,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 
 class MainActivity : AppCompatActivity() {
+    lateinit var TELEPHONY_SERVICE: Context
+
     private val viewBinding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
