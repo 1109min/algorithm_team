@@ -62,6 +62,8 @@ class MakeActivity : AppCompatActivity() {
                 Log.d("rrrrrrrrrr2",origin_recipes.size.toString())
 
                 val result = Leftover_Food(origin_ingredients, origin_recipes)
+
+
                 resData = result.get_Leftover_Food()
 
                 if(resData.size <=0){
@@ -113,6 +115,7 @@ class MakeActivity : AppCompatActivity() {
                         print()
                     }
                     binding.checkBtn.setOnClickListener {
+                        Log.d("뭔대",index.toString()+ resData[index].name)
                         base_recipe = resData[index]
 
                         result_menu.name = base_recipe.name
@@ -127,6 +130,8 @@ class MakeActivity : AppCompatActivity() {
                         result_menu.star = 0
 
                         firestore!!.collection("currents").document("0").set(result_menu)
+                        firestore!!.collection("currents1").document("0").set(result_menu)
+
                         finish()
                     }
                 }
@@ -225,7 +230,7 @@ class MakeActivity : AppCompatActivity() {
         var in_check : Boolean = false
         firestore = FirebaseFirestore.getInstance()
 
-        firestore?.collection("ingredient_test")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+        firestore?.collection("ingredient")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
             // ArrayList 비워줌
             origin_ingredients.clear()
             for (snapshot in querySnapshot!!.documents) {
@@ -350,6 +355,7 @@ class MakeActivity : AppCompatActivity() {
 
         info += new_info
         binding.menuIngredient.text = info
+        binding.makeLoad.setImageResource(base_recipe.pic)
     }
     //메소드 칸
 

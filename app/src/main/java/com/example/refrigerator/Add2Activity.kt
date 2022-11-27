@@ -5,8 +5,11 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -152,11 +155,90 @@ class Add2Activity : AppCompatActivity() {
             setResult(RESULT_OK, intent)
             finish()
         }
+
+
+        val items = arrayOf("김치","과일","채소","수산물","고기","유제품","견과류","주류","기타")
+
+        val myAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, items)
+
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.my_array,
+            R.layout.spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            binding.spinner.adapter = adapter
+
+        }
+
+        //binding.spinner.adapter = myAdapter
+
+        var pic:Int = 0
+        binding.spinner.setSelection(9)
+
+        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+
+                //아이템이 클릭 되면 맨 위부터 position 0번부터 순서대로 동작하게 됩니다.
+                when (position) {
+                    0 -> { //김치류
+                        pic = R.drawable.pic5_kimchi
+                    }
+                    1 -> { //과일류
+                        pic = R.drawable.pic3_fruit
+                    }
+                    2 -> { //채소류
+                        pic = R.drawable.pic6_vegetable
+                    }
+                    3 -> { //육류
+                        pic = R.drawable.pic1_barbecue
+                    }
+                    4 -> { //수산물
+                        pic = R.drawable.pic8_seafood
+                    }
+                    5 -> { //견과류
+                        pic = R.drawable.nuts
+                    }
+                    6 -> { //유제품류
+                        pic = R.drawable.pic2_dairy_products
+                    }
+                    7 -> { //주류
+                        pic = R.drawable.pic7_wine
+                    }
+                    8 -> { //조미료
+                        pic = R.drawable.spice
+                    }
+                    9 -> { //기타류
+                        pic = R.drawable.grocery
+                    }
+                    else -> {
+                        pic = R.drawable.grocery
+                    }
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+            fun onNothingSelecte(parent: AdapterView<*>) {
+
+            }
+        }
+
+
         binding.addBtn.setOnClickListener {
             if (inname.equals("") || inamount.equals("")) {
 
             } else {
-                dataList.add(IngredientData(inname.text.toString(),inamount.text.toString(),indate.text.toString(),0,0))
+                dataList.add(IngredientData(inname.text.toString(),inamount.text.toString(),indate.text.toString(),pic,0))
 
                 inname.setText("")
                 inamount.setText("")

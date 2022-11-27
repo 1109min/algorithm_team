@@ -87,6 +87,7 @@ class MainActivity : AppCompatActivity() {
                             .beginTransaction()
                             .replace(viewBinding.containerFragment.id,ListFragment())
                             .commitAllowingStateLoss()
+
                     }
                     R.id.menu_settings -> {
                         supportFragmentManager
@@ -250,6 +251,22 @@ class MainActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
+    override fun onResume() {
+        fab_main!!.setImageResource(R.drawable.ic_baseline_add_24)
+        fab_sub1!!.startAnimation(fab_close)
+        fab_sub2!!.startAnimation(fab_close)
+        viewBinding.menuMake!!.isClickable = false
+        viewBinding.recipePlus!!.isClickable = false
+        viewBinding.ingredientPlus!!.isClickable = false
+
+        fab_sub1!!.isClickable = false
+        fab_sub2!!.isClickable = false
+        isFabOpen = false
+        viewBinding.btnBackLayout.startAnimation(fadeOutAnim)
+        viewBinding.btnBackLayout.visibility = GONE
+
+        super.onResume()
+    }
 }
 
 

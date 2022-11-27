@@ -95,7 +95,7 @@ class RecipeRVAdapter(private val dataList: ArrayList<RecipeData>): RecyclerView
             }
 
 
-            viewBinding.ingredientPic.setImageResource(pic)
+            viewBinding.ingredientPic.setImageResource(data.pic)
 
 
 //            if (data.read) {

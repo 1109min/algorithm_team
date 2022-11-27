@@ -71,7 +71,6 @@ class Leftover_Food internal constructor(
 			foodWeight[i][MAX_ING_PER_FOOD] = 0 // 현재 계산된 ingredient의 개수 (계산시 사용)
 		}
 		Calculate_Recipe()
-		println("이 씨발롬아 " + resultFood.size + "Dd")
 		return resultFood
 	}
 
@@ -162,6 +161,8 @@ class Leftover_Food internal constructor(
 						foodWeight[j][MAX_ING_PER_FOOD + 2] =
 							weightSum / foodList[j].ingredient.size
 						calTime += 3
+						Log.d("rank_wht","나는야가중치:  " + foodWeight[j][MAX_ING_PER_FOOD + 2] +"이름: "+foodList[j].name)
+
 					}
 					break
 				} // k loop문의 끝

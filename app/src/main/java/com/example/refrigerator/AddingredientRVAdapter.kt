@@ -55,7 +55,7 @@ class AddingredientRVAdapter(private val dataList: ArrayList<IngredientData>): R
 
             viewBinding.dateItem.setText(data.dateString)
 
-            viewBinding.picItem.setImageResource(R.drawable.pic1_barbecue)
+            viewBinding.picItem.setImageResource(data.pic)
         }
     }
 
