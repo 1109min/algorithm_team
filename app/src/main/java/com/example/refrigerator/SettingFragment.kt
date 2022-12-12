@@ -1,59 +1,143 @@
-package com.example.refrigerator
+package com.example.refrigerator//package com.example.refrigerator
 
+import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
+import android.content.Context
+import android.content.Context.TELEPHONY_SERVICE
+import android.content.Intent
+import android.graphics.Color
+import android.icu.text.SimpleDateFormat
+import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.telephony.TelephonyManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.instagram_logan.TestRVAdapter
+import com.example.refrigerator.databinding.FragmentSettingBinding
+import com.example.refrigerator.databinding.FragmentTab2Binding
+import com.example.refrigerator.databinding.RecipeItemLayoutBinding
+import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SettingFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class SettingFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class SettingFragment: Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    lateinit var binding: FragmentSettingBinding
+    lateinit var mainActivity: MainActivity
+
+    var testLocalDataList : ArrayList<TestLocalData> = arrayListOf()
+    val testDataList: ArrayList<TestData> = arrayListOf()
+
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        // 2. Context를 Activity로 형변환하여 할당
+        mainActivity = context as MainActivity
     }
-
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_setting, container, false)
-    }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SettingFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SettingFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    ): View? {
+        binding = FragmentSettingBinding.inflate(inflater, container, false)
+
+
+
+
+        var firestore: FirebaseFirestore? = null
+        var uid: String? = null
+        uid = FirebaseAuth.getInstance().currentUser?.uid
+        firestore = FirebaseFirestore.getInstance()
+
+        val adapter = TestRVAdapter(testLocalDataList)
+
+
+
+        binding.chatBtn.setOnClickListener {
+            for (i in 0 until testDataList.size) {
+                firestore!!.collection("tests").document(i.toString())
+                    .set(testDataList[i])
             }
+        }
+
+
+        firestore?.collection("tests")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+            // ArrayList 비워줌
+            testDataList.clear()
+
+            for (snapshot in querySnapshot!!.documents) {
+                var item = snapshot.toObject(TestData::class.java)
+                testDataList.add(item!!)
+
+                var byYear = Comparator.comparing { obj: TestData -> obj.time.split("-")[0] }
+                var byMonth = Comparator.comparing { obj: TestData -> obj.time.split("-")[1] }
+                var byday = Comparator.comparing { obj: TestData -> obj.time.split("-")[2] }
+                var byhour = Comparator.comparing { obj: TestData -> obj.time.split("-")[3] }
+                var byminute = Comparator.comparing { obj: TestData -> obj.time.split("-")[4] }
+                var bysecond = Comparator.comparing { obj: TestData -> obj.time.split("-")[5] }
+
+                testDataList.sortWith(
+                    byYear.thenComparing(
+                        byMonth.thenComparing(
+                            byday.thenComparing(
+                                byhour.thenComparing(byminute.thenComparing(bysecond))
+                            )
+                        )
+                    )
+                )
+                for(i in 0 until testDataList.size){
+//                    if(testDataList[i].user_num == 1)
+                }
+                adapter.notifyDataSetChanged()
+            }
+        }
+
+        binding.settRV.layoutManager = LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false)
+
+
+        //binding.mainFeed.adapter = Postadapter
+        binding.settRV.adapter = adapter
+
+        binding.settRV.addItemDecoration(RVDecoration(40,1))
+
+
+        //각 아이템을 클릭했을 때
+        adapter.setMyItemClickListener(object : TestRVAdapter.OnItemClickListener {
+            override fun onItemClick(position: Int) {
+
+                adapter.notifyItemChanged(position)
+            }override fun onLongClick(position: Int) {
+
+                adapter.notifyDataSetChanged()
+
+            }
+        })
+
+
+        adapter.notifyDataSetChanged()
+
+
+
+
+        return binding.root
     }
 }

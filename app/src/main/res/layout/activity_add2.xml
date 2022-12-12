@@ -34,7 +34,9 @@
             android:layout_marginTop="15dp"
             android:background="@drawable/background_layout"
             android:backgroundTint="@color/grey"
-            android:padding="20dp"
+            android:paddingTop="20dp"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
 
             app:layout_constraintBottom_toTopOf="@id/constraintLayout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +66,9 @@
                 android:fontFamily="@font/jua"
                 android:padding="10dp"
 
-                android:text="김치"
+                android:hint="김치"
+                android:textColorHint="@color/wgrey"
+
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="15sp"
@@ -84,7 +88,8 @@
                 android:fontFamily="@font/jua"
                 android:padding="10dp"
 
-                android:text="100g"
+                android:hint="100g"
+                android:textColorHint="@color/wgrey"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="15sp"
@@ -105,7 +110,9 @@
                 android:fontFamily="@font/jua"
                 android:padding="10dp"
 
-                android:text="2022-11-16"
+                android:hint="2022-11-30"
+                android:textColorHint="@color/wgrey"
+
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="15sp"
@@ -116,10 +123,24 @@
 
                 ></EditText>
 
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="70dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="15dp"
+                android:spinnerMode="dropdown"
+                android:background="@drawable/background_layout"
+                android:backgroundTint="@color/white"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/add_btn"
+                app:layout_constraintStart_toEndOf="@id/ingredient_amount_ET"
+                app:layout_constraintEnd_toEndOf="parent"
+                ></Spinner>
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/add_btn"
                 android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginStart="15dp"
                 android:background="@drawable/menu_button"
                 android:elevation="5dp"
@@ -130,7 +151,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ingredient_amount_ET"
-                app:layout_constraintTop_toTopOf="parent"></androidx.appcompat.widget.AppCompatButton>
+                app:layout_constraintTop_toBottomOf="@id/spinner"></androidx.appcompat.widget.AppCompatButton>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -151,6 +172,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout"></androidx.appcompat.widget.AppCompatButton>
+        ></androidx.appcompat.widget.AppCompatButton>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

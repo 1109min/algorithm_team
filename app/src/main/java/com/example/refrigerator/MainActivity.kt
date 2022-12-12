@@ -3,8 +3,6 @@ package com.example.refrigerator
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
-import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.animation.Animation
@@ -13,7 +11,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.refrigerator.databinding.ActivityAdd1Binding
 import com.example.refrigerator.databinding.ActivityMainBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
@@ -66,8 +63,6 @@ class MainActivity : AppCompatActivity() {
         var bundle_home = Bundle()
         var results : ArrayList<ResultData> = arrayListOf()
 
-//        bundle_home.putSerializable("results",results)
-//        bundle_home.putParcelableArrayList("results",results)
         fragment_home.arguments = bundle_home
 
         viewBinding.navBottom.run{
@@ -84,6 +79,7 @@ class MainActivity : AppCompatActivity() {
                             .beginTransaction()
                             .replace(viewBinding.containerFragment.id,ListFragment())
                             .commitAllowingStateLoss()
+
                     }
                     R.id.menu_settings -> {
                         supportFragmentManager
@@ -182,30 +178,6 @@ class MainActivity : AppCompatActivity() {
 
         resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
             if (result.resultCode == Activity.RESULT_OK) {
-//                var menu_check : String = result.data?.getStringExtra("menu_check") ?: ""
-//                var in_check : String = result.data?.getStringExtra("in_check") ?: ""
-//                var index : Int = result.data?.getIntExtra("index") ?: 0
-//                Log.d("DDDDDd","fffffffffff")
-//
-//
-//                if(menu_check.equals("1")){
-//
-//                    var menuList : ArrayList<RecipeData> = result.data?.getSerializableExtra("menu") as ArrayList<RecipeData>
-//                    firestore.collection("recipes").document(recipes.size.toString()).set(menuList[0])
-//                    Log.d("DDDDDd","fdfdfd")
-//                }
-//
-//                if(in_check.equals("1")){
-//                    var ingredient = result.data?.getSerializableExtra("ingredient") as ArrayList<IngredientData>
-//                    //firestore.collection("ingredient").document(ingredients.size.toString()).set(ingredient)
-//
-//                            for(i in 0 until ingredient.size) {
-//                    firestore.collection("ingredient").document((ingredients.size).toString()).set(ingredient[i])
-//                    }
-//                    Log.d("DDDDDd","ssssssss")
-//
-//                }
-
 
             }
         }
@@ -247,6 +219,22 @@ class MainActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
+    override fun onResume() {
+        fab_main!!.setImageResource(R.drawable.ic_baseline_add_24)
+        fab_sub1!!.startAnimation(fab_close)
+        fab_sub2!!.startAnimation(fab_close)
+        viewBinding.menuMake!!.isClickable = false
+        viewBinding.recipePlus!!.isClickable = false
+        viewBinding.ingredientPlus!!.isClickable = false
+
+        fab_sub1!!.isClickable = false
+        fab_sub2!!.isClickable = false
+        isFabOpen = false
+        viewBinding.btnBackLayout.startAnimation(fadeOutAnim)
+        viewBinding.btnBackLayout.visibility = GONE
+
+        super.onResume()
+    }
 }
 
 

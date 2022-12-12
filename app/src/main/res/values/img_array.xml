@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="img_array">
+        <item>고기요리</item>
+        <item>해물요리</item>
+        <item>밥요리</item>
+        <item>닭요리</item>
+        <item>튀김요리</item>
+        <item>한식</item>
+        <item>중식</item>
+        <item>일식</item>
+        <item>양식</item>
+        <item>찌개</item>
+        <item>카레</item>
+        <item>샐러드</item>
+        <item>김치요리</item>
+        <item>기타</item>
+    </string-array>
+</resources>

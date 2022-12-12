@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:background="@drawable/background_layout"
+        android:backgroundTint="@color/grey"
+        android:text="someone"
+        android:textColor="@color/blue"
+        android:fontFamily="@font/jua"
+        android:textSize="18sp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        >
+    </TextView>
+    <TextView
+        android:id="@+id/artivle_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:maxWidth="300dp"
+        android:text="예시ddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        android:textSize="18sp"
+        android:fontFamily="@font/jua"
+        android:padding="15dp"
+        android:elevation="5dp"
+        android:background="@drawable/background_layout"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/me"
+        ></TextView>
+    <TextView
+        android:id="@+id/timeTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:background="@drawable/background_layout"
+        android:backgroundTint="@color/grey"
+        android:layout_marginEnd="5dp"
+        android:fontFamily="@font/jua"
+        android:text="2022/11/23"
+        android:textSize="10sp"
+        android:textColor="@color/wgrey"
+        app:layout_constraintEnd_toStartOf="@id/me"
+        app:layout_constraintBottom_toBottomOf="@id/me"
+        ></TextView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

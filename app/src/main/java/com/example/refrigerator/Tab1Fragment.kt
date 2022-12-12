@@ -93,7 +93,7 @@ class Tab1Fragment: Fragment() {
                 }
 
                 binding.nameItem.text = ingredientList[position].name
-                binding.amountItem.text = ingredientList[position].amount+"g"
+                binding.amountItem.text = ingredientList[position].amount
                 binding.dateItem.text = ingredientList[position].dateString
                 binding.picItem.setImageResource(ingredientList[position].pic)
 

@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.*
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -13,15 +12,13 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.example.refrigerator.databinding.ActivityMainBinding
 import com.example.refrigerator.databinding.FragmentHomeBinding
 import com.google.firebase.firestore.FirebaseFirestore
-import java.sql.Timestamp
-import java.text.SimpleDateFormat
-import java.util.ArrayList
-import java.util.Comparator
 
 
 class HomeFragment : Fragment() {
@@ -149,8 +146,8 @@ class HomeFragment : Fragment() {
 
 
 
-        binding.homeRv.adapter = adapter
         binding.homeRv.addItemDecoration(RVDecoration(50, 1))
+        binding.homeRv.adapter = adapter
 
         binding.homeRv.scheduleLayoutAnimation()
         val anim = AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.anim_slide)
@@ -172,6 +169,8 @@ class HomeFragment : Fragment() {
                     Log.d("wow", "gg")
                 }
                 adapter.notifyDataSetChanged()
+                binding.homeRv.scheduleLayoutAnimation()
+
             }
 
         var currentData: ArrayList<ResultData> = arrayListOf()
@@ -179,13 +178,13 @@ class HomeFragment : Fragment() {
         firestore = FirebaseFirestore.getInstance()
         firestore?.collection("currents")
             ?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-                // ArrayList 비워줌
+                currentData.clear() // ArrayList 비워줌
 
                 var i: Int = 0
                 for (snapshot in querySnapshot!!.documents) {
                     var item = snapshot.toObject(ResultData::class.java)
                     currentData.add(item!!)
-                    Log.d("wow", "fff")
+                    Log.d("wows", currentData[0].name)
                     ResultList.add(ResultList.size,currentData[0])
                     i++
                 }
@@ -193,79 +192,84 @@ class HomeFragment : Fragment() {
             }
 
 
-        //터치 시 화면 송출
-        ResultList.apply {
-            add(
-                ResultData(
-                    "김치찌개", arrayListOf(
-                        needData("김치", "100g", 0),
-                        needData("돼지고기", "100g", 0),
-                        needData("대파", "30g", 0),
-                        needData("마늘", "20g", 0),
-                    ), "2022-10-31", R.drawable.pic8_seafood, 0
-                )
-            )
 
-            add(
-                ResultData(
-                    "된장찌개", arrayListOf(
-                        needData("된장", "300g", 0),
-                        needData("양파", "300g", 0),
-                        needData("소금", "5g", 0),
-                        needData("마늘", "20g", 0),
-                        needData("청양고추", "40g", 0),
-                        needData("설탕", "5g", 0),
-                        needData("애호박", "100g", 0),
-                        needData("감자", "50g", 0),
-                    ), "2022-11-02", R.drawable.pic1_barbecue, 0
-                )
-            )
 
-            add(
-                ResultData(
-                    "부대찌개", arrayListOf(
-                        needData("돼지고기", "200g", 0),
-                        needData("양파", "50g", 0),
-                        needData("후추", "50g", 0),
-                        needData("대파", "20g", 0),
-                        needData("김치", "50g", 0),
-                        needData("마늘", "100g", 0),
-                        needData("소시지", "50g", 0),
-                    ), "2022-11-07", R.drawable.pic2_dairy_products, 0
-                )
-            )
 
-            add(
-                ResultData(
-                    "돼지고기숙주볶음", arrayListOf(
-                        needData("돼지고기", "180g", 0),
-                        needData("숙주", "210g", 0),
-                        needData("대파", "50g", 0),
-                        needData("마늘", "50g", 0)
-                    ), "2022-11-10", R.drawable.pic3_fruit, 0
-                )
-            )
-
-            add(
-                ResultData(
-                    "오징어볶음", arrayListOf(
-                        needData("오징어", "600g", 0),
-                        needData("양배추", "100g", 0),
-                        needData("당근", "200g", 0),
-                        needData("양파", "150g", 0),
-                        needData("파", "100g", 0),
-                        needData("마늘", "20g", 0),
-                        needData("청양고추", "20g", 0),
-                        needData("설탕", "10g", 0)
-                    ), "2022-11-19", R.drawable.pic2_dairy_products, 0
-                )
-            )
-        }
+            //        //터치 시 화면 송출
+//        ResultList.apply {
+//            add(
+//                ResultData(
+//                    "김치찌개", arrayListOf(
+//                        needData("김치", "100g", 0),
+//                        needData("돼지고기", "100g", 0),
+//                        needData("대파", "30g", 0),
+//                        needData("마늘", "20g", 0),
+//                    ), "2022-10-31", R.drawable.pic8_seafood, 0
+//                )
+//            )
+//
+//            add(
+//                ResultData(
+//                    "된장찌개", arrayListOf(
+//                        needData("된장", "300g", 0),
+//                        needData("양파", "300g", 0),
+//                        needData("소금", "5g", 0),
+//                        needData("마늘", "20g", 0),
+//                        needData("청양고추", "40g", 0),
+//                        needData("설탕", "5g", 0),
+//                        needData("애호박", "100g", 0),
+//                        needData("감자", "50g", 0),
+//                    ), "2022-11-02", R.drawable.pic1_barbecue, 0
+//                )
+//            )
+//
+//            add(
+//                ResultData(
+//                    "부대찌개", arrayListOf(
+//                        needData("돼지고기", "200g", 0),
+//                        needData("양파", "50g", 0),
+//                        needData("후추", "50g", 0),
+//                        needData("대파", "20g", 0),
+//                        needData("김치", "50g", 0),
+//                        needData("마늘", "100g", 0),
+//                        needData("소시지", "50g", 0),
+//                    ), "2022-11-07", R.drawable.pic2_dairy_products, 0
+//                )
+//            )
+//
+//            add(
+//                ResultData(
+//                    "돼지고기숙주볶음", arrayListOf(
+//                        needData("돼지고기", "180g", 0),
+//                        needData("숙주", "210g", 0),
+//                        needData("대파", "50g", 0),
+//                        needData("마늘", "50g", 0)
+//                    ), "2022-11-10", R.drawable.pic3_fruit, 0
+//                )
+//            )
+//
+//            add(
+//                ResultData(
+//                    "오징어볶음", arrayListOf(
+//                        needData("오징어", "600g", 0),
+//                        needData("양배추", "100g", 0),
+//                        needData("당근", "200g", 0),
+//                        needData("양파", "150g", 0),
+//                        needData("파", "100g", 0),
+//                        needData("마늘", "20g", 0),
+//                        needData("청양고추", "20g", 0),
+//                        needData("설탕", "10g", 0)
+//                    ), "2022-11-19", R.drawable.pic2_dairy_products, 0
+//                )
+//            )
+//        }
 
         var byYear = Comparator.comparing { obj: ResultData -> obj.date.split("-")[0] }
         var byMonth = Comparator.comparing { obj: ResultData -> obj.date.split("-")[1] }
         var byday = Comparator.comparing { obj: ResultData -> obj.date.split("-")[2] }
-        ResultList.sortWith(byYear.thenComparing(byMonth.thenComparing(byday)))
+        var byname = Comparator.comparing { obj: ResultData -> obj.name }
+
+        ResultList.sortWith(byYear.thenComparing(byMonth.thenComparing(byday.thenComparing(byname))))
         ResultList.reverse()
 
         //쓰기
@@ -277,6 +281,8 @@ class HomeFragment : Fragment() {
 //        }
 
         adapter.notifyDataSetChanged()
+        binding.homeRv.scheduleLayoutAnimation()
+
         fab_open = AnimationUtils.loadAnimation(this.activity, R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(this.activity, R.anim.fab_close);
 
@@ -381,6 +387,8 @@ class HomeFragment : Fragment() {
                 firestore!!.collection("results").document(ResultList.size.toString())
                     .delete()
                 adapter.notifyDataSetChanged()
+                binding.homeRv.scheduleLayoutAnimation()
+
 
             }
         })
@@ -419,6 +427,7 @@ class HomeFragment : Fragment() {
                 ResultList[po].star = 0
             }
             adapter.notifyDataSetChanged()
+
         }
         star2.setOnClickListener {
             star1.setBackgroundResource(R.drawable.ic_baseline_star_24)
@@ -428,6 +437,7 @@ class HomeFragment : Fragment() {
             star5.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
             ResultList[po].star = 2
             adapter.notifyDataSetChanged()
+
         }
         star3.setOnClickListener {
             star1.setBackgroundResource(R.drawable.ic_baseline_star_24)
@@ -437,6 +447,7 @@ class HomeFragment : Fragment() {
             star5.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
             ResultList[po].star = 3
             adapter.notifyDataSetChanged()
+
         }
         star4.setOnClickListener {
             star1.setBackgroundResource(R.drawable.ic_baseline_star_24)
@@ -446,6 +457,7 @@ class HomeFragment : Fragment() {
             star5.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
             ResultList[po].star = 4
             adapter.notifyDataSetChanged()
+
         }
         star5.setOnClickListener {
             star1.setBackgroundResource(R.drawable.ic_baseline_star_24)
@@ -455,6 +467,7 @@ class HomeFragment : Fragment() {
             star5.setBackgroundResource(R.drawable.ic_baseline_star_24)
             ResultList[po].star = 5
             adapter.notifyDataSetChanged()
+
         }
 
         val intentMake = Intent(this.context, MakeActivity::class.java)
@@ -485,6 +498,7 @@ class HomeFragment : Fragment() {
                 ResultList[po].star = 0
             }
             adapter.notifyDataSetChanged()
+
         }
         star2.setOnClickListener {
             star1.setBackgroundResource(R.drawable.ic_baseline_star_24)
@@ -494,6 +508,7 @@ class HomeFragment : Fragment() {
             star5.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
             ResultList[po].star = 2
             adapter.notifyDataSetChanged()
+
         }
         star3.setOnClickListener {
             star1.setBackgroundResource(R.drawable.ic_baseline_star_24)
@@ -503,6 +518,7 @@ class HomeFragment : Fragment() {
             star5.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
             ResultList[po].star = 3
             adapter.notifyDataSetChanged()
+
         }
         star4.setOnClickListener {
             star1.setBackgroundResource(R.drawable.ic_baseline_star_24)
@@ -512,6 +528,7 @@ class HomeFragment : Fragment() {
             star5.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
             ResultList[po].star = 4
             adapter.notifyDataSetChanged()
+
         }
         star5.setOnClickListener {
             star1.setBackgroundResource(R.drawable.ic_baseline_star_24)
@@ -521,6 +538,7 @@ class HomeFragment : Fragment() {
             star5.setBackgroundResource(R.drawable.ic_baseline_star_24)
             ResultList[po].star = 5
             adapter.notifyDataSetChanged()
+
         }
 
 
@@ -561,9 +579,17 @@ class HomeFragment : Fragment() {
 //        val anim = AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.anim_slide)
 //        binding.homeRv.layoutAnimation = anim
 //        binding.homeRv.scheduleLayoutAnimation()
-        binding.homeRv.scheduleLayoutAnimation()
 
-            adapter.notifyDataSetChanged()
-            super.onResume()
+
+//        binding.homeRv.scheduleLayoutAnimation()
+//        adapter.notifyDataSetChanged()
+
+        super.onResume()
+    }
+
+    override fun onPause() {
+        Log.d("pasue냐","네")
+        super.onPause()
+
     }
 }
