@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.*
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -13,15 +12,13 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.example.refrigerator.databinding.ActivityMainBinding
 import com.example.refrigerator.databinding.FragmentHomeBinding
 import com.google.firebase.firestore.FirebaseFirestore
-import java.sql.Timestamp
-import java.text.SimpleDateFormat
-import java.util.ArrayList
-import java.util.Comparator
 
 
 class HomeFragment : Fragment() {
@@ -172,6 +169,8 @@ class HomeFragment : Fragment() {
                     Log.d("wow", "gg")
                 }
                 adapter.notifyDataSetChanged()
+                binding.homeRv.scheduleLayoutAnimation()
+
             }
 
         var currentData: ArrayList<ResultData> = arrayListOf()
@@ -193,7 +192,10 @@ class HomeFragment : Fragment() {
             }
 
 
-//        //터치 시 화면 송출
+
+
+
+            //        //터치 시 화면 송출
 //        ResultList.apply {
 //            add(
 //                ResultData(
@@ -279,6 +281,8 @@ class HomeFragment : Fragment() {
 //        }
 
         adapter.notifyDataSetChanged()
+        binding.homeRv.scheduleLayoutAnimation()
+
         fab_open = AnimationUtils.loadAnimation(this.activity, R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(this.activity, R.anim.fab_close);
 
@@ -383,6 +387,8 @@ class HomeFragment : Fragment() {
                 firestore!!.collection("results").document(ResultList.size.toString())
                     .delete()
                 adapter.notifyDataSetChanged()
+                binding.homeRv.scheduleLayoutAnimation()
+
 
             }
         })
@@ -421,6 +427,7 @@ class HomeFragment : Fragment() {
                 ResultList[po].star = 0
             }
             adapter.notifyDataSetChanged()
+
         }
         star2.setOnClickListener {
             star1.setBackgroundResource(R.drawable.ic_baseline_star_24)
@@ -430,6 +437,7 @@ class HomeFragment : Fragment() {
             star5.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
             ResultList[po].star = 2
             adapter.notifyDataSetChanged()
+
         }
         star3.setOnClickListener {
             star1.setBackgroundResource(R.drawable.ic_baseline_star_24)
@@ -439,6 +447,7 @@ class HomeFragment : Fragment() {
             star5.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
             ResultList[po].star = 3
             adapter.notifyDataSetChanged()
+
         }
         star4.setOnClickListener {
             star1.setBackgroundResource(R.drawable.ic_baseline_star_24)
@@ -448,6 +457,7 @@ class HomeFragment : Fragment() {
             star5.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
             ResultList[po].star = 4
             adapter.notifyDataSetChanged()
+
         }
         star5.setOnClickListener {
             star1.setBackgroundResource(R.drawable.ic_baseline_star_24)
@@ -457,6 +467,7 @@ class HomeFragment : Fragment() {
             star5.setBackgroundResource(R.drawable.ic_baseline_star_24)
             ResultList[po].star = 5
             adapter.notifyDataSetChanged()
+
         }
 
         val intentMake = Intent(this.context, MakeActivity::class.java)
@@ -487,6 +498,7 @@ class HomeFragment : Fragment() {
                 ResultList[po].star = 0
             }
             adapter.notifyDataSetChanged()
+
         }
         star2.setOnClickListener {
             star1.setBackgroundResource(R.drawable.ic_baseline_star_24)
@@ -496,6 +508,7 @@ class HomeFragment : Fragment() {
             star5.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
             ResultList[po].star = 2
             adapter.notifyDataSetChanged()
+
         }
         star3.setOnClickListener {
             star1.setBackgroundResource(R.drawable.ic_baseline_star_24)
@@ -505,6 +518,7 @@ class HomeFragment : Fragment() {
             star5.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
             ResultList[po].star = 3
             adapter.notifyDataSetChanged()
+
         }
         star4.setOnClickListener {
             star1.setBackgroundResource(R.drawable.ic_baseline_star_24)
@@ -514,6 +528,7 @@ class HomeFragment : Fragment() {
             star5.setBackgroundResource(R.drawable.ic_baseline_star_outline_24)
             ResultList[po].star = 4
             adapter.notifyDataSetChanged()
+
         }
         star5.setOnClickListener {
             star1.setBackgroundResource(R.drawable.ic_baseline_star_24)
@@ -523,6 +538,7 @@ class HomeFragment : Fragment() {
             star5.setBackgroundResource(R.drawable.ic_baseline_star_24)
             ResultList[po].star = 5
             adapter.notifyDataSetChanged()
+
         }
 
 
@@ -565,8 +581,9 @@ class HomeFragment : Fragment() {
 //        binding.homeRv.scheduleLayoutAnimation()
 
 
-        binding.homeRv.scheduleLayoutAnimation()
-        adapter.notifyDataSetChanged()
+//        binding.homeRv.scheduleLayoutAnimation()
+//        adapter.notifyDataSetChanged()
+
         super.onResume()
     }
 

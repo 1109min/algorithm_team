@@ -10,9 +10,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
-
     <uses-permission
         android:name="android.permission.BLUETOOTH"
         tools:node="remove" />
@@ -37,13 +36,20 @@
         android:theme="@style/Theme.Refrigerator"
         tools:targetApi="31">
         <activity
+            android:name=".FirstActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Add2Activity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".Add1Activity"></activity>
+        <activity android:name=".Add1Activity" />
         <activity
             android:name=".MakeActivity"
             android:exported="false">

@@ -1,5 +1,6 @@
 package com.example.refrigerator
 
+import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Color
@@ -39,6 +40,7 @@ class Tab2Fragment: Fragment() {
     var arrayList: java.util.ArrayList<Any> = java.util.ArrayList()
     var recipes: ArrayList<RecipeData> = arrayListOf()
 
+    @SuppressLint("SuspiciousIndentation")
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -153,11 +155,11 @@ class Tab2Fragment: Fragment() {
 //            firestore.collection("recipes").document(i.toString()).set(recipeList[i])
 //        }
             //예시 초기화용
-        recipeList.sortBy { it.name }
-        for(i in 0 until recipeList.size){
-            firestore!!.collection("recipes").document(i.toString())
-                .set(recipeList[i])
-        }
+//        recipeList.sortBy { it.name }
+//        for(i in 0 until recipeList.size){
+//            firestore!!.collection("recipes").document(i.toString())
+//                .set(recipeList[i])
+//        }
 
             firestore?.collection("recipes")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                 // ArrayList 비워줌

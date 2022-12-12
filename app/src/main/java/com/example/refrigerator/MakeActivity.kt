@@ -3,11 +3,8 @@ package com.example.refrigerator
 import Leftover_Food
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
-import android.content.Intent
-import android.graphics.Color
 import android.os.*
 import androidx.appcompat.app.AppCompatActivity
-import android.renderscript.ScriptGroup.Binding
 import android.util.Log
 import android.view.View
 import android.view.View.GONE
@@ -15,15 +12,10 @@ import android.view.View.VISIBLE
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.annotation.RequiresApi
-import com.example.refrigerator.databinding.ActivityMainBinding
 import com.example.refrigerator.databinding.ActivityMakeBinding
-import com.google.android.material.snackbar.BaseTransientBottomBar.AnimationMode
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.local.LruGarbageCollector.Results
-import org.checkerframework.checker.index.qual.GTENegativeOne
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
-import java.util.Comparator
 
 class MakeActivity : AppCompatActivity() {
     private val binding: ActivityMakeBinding by lazy {
@@ -89,12 +81,6 @@ class MakeActivity : AppCompatActivity() {
                     var index:Int = 0;
 
                     binding.beforeBtn.setOnClickListener {
-
-//                        var vib : Vibrator = getSystemService(VIBRATOR_SERVICE) as Vibrator
-//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                            vib.vibrate(VibrationEffect.createOneShot(200,1))
-//                        }
-
                         index --
                         if(index <0){
                             index = size -1
@@ -252,69 +238,6 @@ class MakeActivity : AppCompatActivity() {
             Log.d("aa",origin_recipes.size.toString())
             handler2.sendEmptyMessage(1)
         }
-
-
-
-        //알고리즘 구동
-
-//        var result_menu : ResultData = ResultData()
-//        var base_recipe : RecipeData = RecipeData()
-
-
-
-
-
-
-
-
-        //알고리즘 끝
-        //맞는 레시피를 찾으면 이제 resultdata로 할당
-
-//        var index:Int = 0;
-//
-//        binding.beforeBtn.setOnClickListener {
-//            index --
-//            if(index <0){
-//                index = 2
-//            }
-//            base_recipe = resData[index];
-//            print()
-//        }
-//        binding.nextBtn.setOnClickListener {
-//            index ++
-//            if(index >2){
-//                index = 0
-//            }
-//            base_recipe = resData[index];
-//            print()
-//        }
-//        binding.checkBtn.setOnClickListener {
-//            base_recipe = resData[index]
-//
-//            result_menu.name = base_recipe.name
-//            result_menu.ingredients = base_recipe.ingredient
-//            result_menu.pic = base_recipe.pic
-//
-//            var current = Timestamp(System.currentTimeMillis())
-//            var sdf = SimpleDateFormat("yyyy-MM-dd")
-//            var currentdate = sdf.format(current)
-//
-//            result_menu.date = currentdate
-//            result_menu.star = 0
-//
-//            firestore!!.collection("currents").document("0").set(result_menu)
-//            //finish()
-//        }
-        //뷰에 표시
-
-
-
-
-//        //읽어오기
-
-
-
-
     } //create 끝
 
     fun print(){
@@ -328,11 +251,6 @@ class MakeActivity : AppCompatActivity() {
 
         result_menu.date = currentdate
         result_menu.star = 0
-
-        //예시
-        //result_menu = ResultData("크리스마스", arrayListOf(needData("스윙스","0",0)),currentdate,0,0)
-
-
 
         binding.menuName.text = base_recipe.name
 
@@ -357,8 +275,6 @@ class MakeActivity : AppCompatActivity() {
         binding.menuIngredient.text = info
         binding.makeLoad.setImageResource(base_recipe.pic)
     }
-    //메소드 칸
-
 }
 
 

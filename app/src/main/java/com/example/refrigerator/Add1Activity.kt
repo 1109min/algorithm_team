@@ -66,6 +66,7 @@ class Add1Activity : AppCompatActivity() {
         var inname = binding.ingredientNameET
         var inamount = binding.ingredientAmountET
 
+        //데이터베이스 연결
         firestore = FirebaseFirestore.getInstance()
         var origin_recipes : ArrayList<RecipeData> = arrayListOf()
         firestore?.collection("recipes")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->

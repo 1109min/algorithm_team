@@ -35,6 +35,7 @@
 
         </androidx.appcompat.widget.AppCompatButton>
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/home_rv"
             android:layout_width="match_parent"
@@ -44,9 +45,9 @@
             tools:listitem="@layout/result_item_layout"
             android:layoutAnimation="@anim/anim_slide"
             app:layout_constraintTop_toBottomOf="@id/top_btn"
-            app:layout_constraintBottom_toTopOf="@id/make_btn"
-            >
+            app:layout_constraintBottom_toTopOf="@id/make_btn">
         </androidx.recyclerview.widget.RecyclerView>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/click_item"
             android:layout_width="270dp"
